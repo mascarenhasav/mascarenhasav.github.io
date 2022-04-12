@@ -1,6 +1,8 @@
+---
 layout: page
 title: "background"
-permalink: /https://mascarenhasav.github.io/background/
+permalink: /background/
+---
 
 ## My academic background
 
