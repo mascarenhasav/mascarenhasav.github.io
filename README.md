@@ -1,8 +1,5 @@
 ## Welcome to my Webpage
 
-layout: page
-title: "Background"
-permalink: https://mascarenhasav.github.io/Background.html
 
 You can use the [editor on GitHub](https://github.com/mascarenhasav/mascarenhasav.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 Here you will find all about my researchs and interests.
