@@ -1,6 +1,5 @@
 ---
 title: MascarenhasAV
-layout: template
 filename: README.md
 ---
 
