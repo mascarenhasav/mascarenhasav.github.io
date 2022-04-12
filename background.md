@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "background"
+title: background
 permalink: /background/
 ---
 
