@@ -1,15 +1,14 @@
 html, body{
     height: 100%;
-  background-color: #363636;
-  color: #00CD00;
 }
      
 body{
-    margin: 0px;
-    padding: 0px;
-    background: #FFFFFF;
-    font-family: 'Roboto';
-    font-size: 12pt;
+	margin: 0px;
+	padding: 0px;
+ 	background-color: #363636;
+	color: #00CD00;
+	font-family: 'Roboto';
+	font-size: 12pt;
 }
          
 h1, h2, h3{
@@ -36,4 +35,80 @@ ol, ul{
         1200px and align center */
     margin: 0px auto;
     width: 1200px;
+}
+
+
+/*************************/
+/*    Styling  Header    */
+/*************************/
+header{
+     
+    overflow: hidden;
+}
+ 
+#top-header{
+         
+    text-align: center;
+    height: 60px;
+}
+ 
+/****************/   
+/* Styling Logo */
+/****************/
+#logo{
+    float: left;
+    padding: none;
+    margin: none;
+    height: 60px;
+    width: 30%;
+}
+ 
+#logo img{
+    width: 60%;
+    float: left;
+    padding: 10px 0px;
+}   
+ 
+/***************************/
+/* Styling Navigation Menu */
+/***************************/
+#menu{
+    float: right;
+    width: 70%;
+    height: 100%;
+    margin: none;
+}
+     
+#menu ul{
+    text-align: center;
+    float: right;
+    margin: none;
+    background: #0074D9;
+}
+     
+#menu li{
+    display: inline-block;
+    padding: none;
+    margin: none;
+}
+     
+#menu li a, #menu li span{
+    display: inline-block;
+    padding: 0em 1.5em;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 60px;
+}
+     
+#menu li a{
+         
+    color: #FFF;
+}
+     
+#menu li:hover a, #menu li span{
+    background: #FFF;
+    color: #0074D9;
+    border-left: 1px solid #0074D9;
+    text-decoration: none;
 }
