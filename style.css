@@ -1,14 +1,18 @@
-html, body{
+html{
 	height: 100%;
+	width: 100%;
 }
      
 body{
-	margin: 0px;
+	margin: 0px 0px 0px 0px;
 	padding: 0px;
+	width: 99%;
+	height: 99%;
  	background-color: #363636;
 	color: #00CD00;
 	font-family: 'Roboto';
 	font-size: 12pt;
+	border: 2px solid blue;
 }
          
 h1, h2, h3{
@@ -33,8 +37,8 @@ ol, ul{
 .container{   
 	/* Set width of container to
 	1200px and align center */
-	margin: 0px auto;
-	width: 1200px;
+	/*margin: 0px auto;
+	width: 100%;*/
 }
 
 
@@ -43,25 +47,39 @@ ol, ul{
 /*************************/
 header{
 	overflow: hidden;
+	border: 1px solid yellow;
+	height: 40%;
+	width: 99%;
+	padding: none;
+	margin: auto;
 }
  
 #top-header{         
 	text-align: center;
-	height: 60px;
+	height: 20%;
+	border: 0px solid blue;
 }
+
  
 /****************/   
-/* Styling Logo */
+/* Styling name*/
 /****************/
-#logo{
+#name{
 	float: left;
 	padding: none;
+	border: 0px solid yellow;
 	margin: none;
-	height: 60px;
-	width: 30%;
+	height: 100%;
+	color: green;
+	width: 29%;
 	text-align: left;
-	font-weight: 600;
-	font-size: 28pt;
+}
+
+#name .title{
+	color: #00a800;
+	font-size: 2em;
+	margin-left: 3%;
+	margin-top:4%;
 }
  
  
@@ -73,6 +91,7 @@ header{
 	width: 70%;
 	height: 100%;
 	margin: none;
+	border: 0px solid white;
 }
      
 #menu ul{
@@ -80,21 +99,23 @@ header{
 	float: right;
 	margin: none;
 	background: #00a800;
+	height: 100%;
 }
      
 #menu li{
 	display: inline-block;
 	padding: none;
 	margin: none;
+	height: 100%;
 }
      
 #menu li a, #menu li span{
 	display: inline-block;
-	padding: 0em 1.5em;
+	padding: 1em 2em;
 	text-decoration: none;
 	font-weight: 600;
 	text-transform: uppercase;
-	line-height: 60px;
+	line-height: 100%;
 }
      
 #menu li a{
@@ -112,14 +133,17 @@ header{
 /* Styling Header Image Menu */
 /*****************************/
 #header-image-menu{
-	top: 10px;
 	position: relative;
+	height:80%;
+	border: 1px solid red;
 }
  
 #header-image-menu img{
-	width: 10%;
+	width: 13%;
+	height: 100%;
 	margin: none;
-	margin-left: 10px;
+	margin-top: 0%;
+	margin-left: 1%;
 	padding: none;
 }
  
@@ -136,19 +160,21 @@ header{
 #welcome
 {    
 	overflow: hidden;
-	width: 1000px;
+	width: 100%;
 	margin: 0px auto;
+	font-size: 1em;
+	border: 0px solid green;
 }
 
 #welcome .title{
-	margin-top: 20px;
-	padding: 20px;
+	margin-top: 0px;
+	padding: 0px;
 	text-align: center;
 	color: white;
 }     
 
 #welcome p{
-	margin-bottom: 40px;
+	margin-bottom: 0px;
 	text-align: center;
 	color: 00a800;
 }
@@ -162,23 +188,77 @@ header{
 #section1
 {    
 	overflow: hidden;
-	width: 1000px;
 	margin: 0px auto;
+	height: 30%;
+	width: 99%;
+	border: 1px solid yellow;
 }
 
 #section1 .title{
-	margin-top: 20px;
-	padding: 20px;
+	margin-top: 1%;
+	padding: 1%;
 	text-align: center;
 	color: white;
 }     
 
 #section1 p{
-	margin-bottom: 40px;
+	margin-bottom: 1%;
 	text-align: center;
 	color: 00a800;
 }
 
+
+/**********************************/
+/* Styling Main content Section 2 */
+/**********************************/
+
+#section-2{
+	overflow: hidden;
+	margin-top: 0.5em;
+	padding-top: 0em;
+	border-top: 1px solid rgba(0, 0, 0, 0.3);
+	text-align: center;
+	height: 20%;
+	width:99%;
+	border: 1px solid green;
+	margin: auto;
+}
+	
+.row #column1,
+.row #column2,
+.row #column3{
+	float: left;
+	padding: 1% 5% 1% 5%;
+}
+
+
+.column-title h2{
+	margin: 1em 0em;
+	font-size: 1.6em;
+	font-weight: 700;
+	color: white;
+}
+
+
+.button {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 1em;
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid #4CAF50;
+    padding: 0.5em 1em;
+    margin: 0.1em 0.05em;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+     
+.button:hover {
+    background-color: black;
+    color: #4CAF50;
+}
 
 
 
@@ -187,32 +267,11 @@ header{
 /**********************************/
 
 #footer{
-	height: 10em;
+	height: 10%;
+	width: 99%;
+	margin: auto;
 }
- 
-/*** Adding Styles to Company Details ***/
-.company-details{
-	overflow: hidden;
-	padding: 1em 0em;
-	background: #E3F0F7;
-	text-align: center;
-	margin-top: 5em;
-}
- 
-#footer #col1,
-#footer #col2,
-#footer #col3{
-	float: left;
-	width: 320px;
-	padding: 0px 40px 0px 40px;
-}
-     
-#footer #icon{
-	display: block;
-	margin-bottom: 1em;
-	font-size: 3em;
-}
- 
+  
 /*** Adding Styles to Copyright Div ***/
 .copyright
 {
@@ -239,13 +298,13 @@ header{
 /* Styling Social Icons */
 ul.contact{
 	margin: 0;
-	padding: 2em 0em 0em 0em;
+	padding: 0em 0em 0em 0em;
 	list-style: none;
 }
      
 ul.contact li{
 	display: inline-block;
-	padding: 0em 0.10em;
+	padding: 0em 0.2em;
 	font-size: 1em;
 }
  
