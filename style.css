@@ -78,7 +78,8 @@ header{
 #name .title{
 	color: #00a800;
 	font-size: 2em;
-	margin-left: 3%;
+	margin: auto;
+	margin-left: 0%;
 	margin-top:4%;
 }
  
@@ -139,12 +140,11 @@ header{
 }
  
 #header-image-menu img{
-	width: 13%;
-	height: 100%;
-	margin: none;
-	margin-top: 0%;
-	margin-left: 1%;
-	padding: none;
+	width: 12%;
+	height: 90%;
+	margin: auto;
+	padding: auto;
+	border: 0.3em solid green;
 }
  
 #image-text{
@@ -183,14 +183,21 @@ header{
 /**********************************/
 /* Styling Main content Section 1 */
 /**********************************/
-
+main{
+	overflow: hidden;
+	border: 1px solid white;
+	height: 50%;
+	width: 99%;
+	padding: none;
+	margin: auto;
+}
 
 #section1
 {    
 	overflow: hidden;
 	margin: 0px auto;
-	height: 30%;
-	width: 99%;
+	height: 50%;
+	width: 100%;
 	border: 1px solid yellow;
 }
 
@@ -218,16 +225,17 @@ header{
 	padding-top: 0em;
 	border-top: 1px solid rgba(0, 0, 0, 0.3);
 	text-align: center;
-	height: 20%;
-	width:99%;
+	height: 50%;
+	width:100%;
 	border: 1px solid green;
+	padding: auto;
 	margin: auto;
 }
 	
 .row #column1,
 .row #column2,
 .row #column3{
-	float: left;
+	margin: auto;
 	padding: 1% 5% 1% 5%;
 }
 
@@ -277,7 +285,7 @@ header{
 {
 	overflow: hidden;
 	padding: 1em 0em;
-	border-top: 20px solid rgba(255, 255, 255, 0.08);
+	border-top: 30% solid rgba(255, 255, 255, 0.08);
 	text-align: center;
 	background: #4CAF50;
 }
@@ -293,27 +301,4 @@ header{
 {
 	text-decoration: none;
 	color: rgba(255, 255, 255, 0.8);
-}
- 
-/* Styling Social Icons */
-ul.contact{
-	margin: 0;
-	padding: 0em 0em 0em 0em;
-	list-style: none;
-}
-     
-ul.contact li{
-	display: inline-block;
-	padding: 0em 0.2em;
-	font-size: 1em;
-}
- 
-ul.contact li a{
-	color: #FFF;
-	display: inline-block;
-	background: #4C93B9;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
 }
