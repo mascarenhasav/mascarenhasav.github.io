@@ -134,41 +134,36 @@ header{
 /* Styling Header Image Menu */
 /*****************************/
 #header-image-menu{
+	float: left;
 	position: relative;
 	height:80%;
 	border: 1px solid red;
+	width: 15%;
 }
  
 #header-image-menu img{
-	width: 12%;
+	width: 80%;
 	height: 90%;
 	margin: auto;
 	padding: auto;
 	border: 0.3em solid green;
 }
  
-#image-text{
-	position: absolute;
-	top: 20%;
-	left: 40%;
-	font-family: 'Roboto';
-	color: #00a800;
-	transform: translate(-30%, -30%);
-	text-align: center;
-}
 
 #welcome
-{    
-	overflow: hidden;
-	width: 100%;
-	margin: 0px auto;
+{
+	text-align: center;
+	/*overflow: hidden;*/
+	width: 99%;
+	height: 100%;
+	margin: auto;
 	font-size: 1em;
-	border: 0px solid green;
+	border: 1px solid green;
 }
 
 #welcome .title{
-	margin-top: 0px;
-	padding: 0px;
+	margin: auto;
+	margin-top: 1%;
 	text-align: center;
 	color: white;
 }     
