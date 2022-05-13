@@ -2,7 +2,7 @@ html{
 	height: 100%;
 	width: 100%;
 }
-     
+
 body{
 	margin: 0px 0px 0px 0px;
 	padding: 0px;
@@ -14,27 +14,27 @@ body{
 	font-size: 12pt;
 	border: 2px solid blue;
 }
-         
+
 h1, h2, h3{
 	margin: 0;
 	padding: 0;
 	color: #404040;
 }
-     
+
 p, ol, ul{
 	margin-top: 0;
 }
- 
+
 p {
 	line-height: 180%;
 }
- 
+
 ol, ul{
 	padding: 0;
 	list-style: none;
 }
-     
-.container{   
+
+.container{
 	/* Set width of container to
 	1200px and align center */
 	/*margin: 0px auto;
@@ -53,15 +53,15 @@ header{
 	padding: none;
 	margin: auto;
 }
- 
-#top-header{         
+
+#top-header{
 	text-align: center;
 	height: 20%;
 	border: 0px solid blue;
 }
 
- 
-/****************/   
+
+/****************/
 /* Styling name*/
 /****************/
 #name{
@@ -77,13 +77,13 @@ header{
 
 #name .title{
 	color: #00a800;
-	font-size: 2em;
+	font-size: 1.5em;
 	margin: auto;
 	margin-left: 0%;
 	margin-top:4%;
 }
- 
- 
+
+
 /***************************/
 /* Styling Navigation Menu */
 /***************************/
@@ -94,7 +94,7 @@ header{
 	margin: none;
 	border: 0px solid white;
 }
-     
+
 #menu ul{
 	text-align: center;
 	float: right;
@@ -102,14 +102,14 @@ header{
 	background: #00a800;
 	height: 100%;
 }
-     
+
 #menu li{
 	display: inline-block;
 	padding: none;
 	margin: none;
 	height: 100%;
 }
-     
+
 #menu li a, #menu li span{
 	display: inline-block;
 	padding: 1em 2em;
@@ -118,11 +118,11 @@ header{
 	text-transform: uppercase;
 	line-height: 100%;
 }
-     
+
 #menu li a{
 	color: #000000;
 }
-     
+
 #menu li:hover a, #menu li span{
 	background: #000000;
 	color: #00a800;
@@ -136,24 +136,24 @@ header{
 #header-image-menu{
 	float: left;
 	position: relative;
-	height:80%;
-	border: 1px solid red;
+	height:75%;
+	border: 0px solid red;
 	width: 15%;
 }
- 
+
 #header-image-menu img{
+	float: left;
 	width: 80%;
-	height: 90%;
+	height: 100%;
 	margin: auto;
 	padding: auto;
-	border: 0.3em solid green;
+	border: 0.2em solid green;
 }
- 
 
 #welcome
 {
-	text-align: center;
-	/*overflow: hidden;*/
+	text-align: left;
+	overflow: hidden;
 	width: 99%;
 	height: 100%;
 	margin: auto;
@@ -164,13 +164,24 @@ header{
 #welcome .title{
 	margin: auto;
 	margin-top: 1%;
-	text-align: center;
 	color: white;
-}     
+}
+#welcome .titleProject{
+	margin: auto;
+	margin-top: 1%;
+	color: white;
+	font-size: 1em;
+}
+#welcome .a{
+	text-decoration: underline;
+
+}
+#welcome a:active {color:black}
+#welcome a:visited {color:green}
+
 
 #welcome p{
 	margin-bottom: 0px;
-	text-align: center;
 	color: 00a800;
 }
 
@@ -188,7 +199,7 @@ main{
 }
 
 #section1
-{    
+{
 	overflow: hidden;
 	margin: 0px auto;
 	height: 50%;
@@ -201,7 +212,7 @@ main{
 	padding: 1%;
 	text-align: center;
 	color: white;
-}     
+}
 
 #section1 p{
 	margin-bottom: 1%;
@@ -226,7 +237,7 @@ main{
 	padding: auto;
 	margin: auto;
 }
-	
+
 .row #column1,
 .row #column2,
 .row #column3{
@@ -257,7 +268,7 @@ main{
     transition-duration: 0.4s;
     cursor: pointer;
 }
-     
+
 .button:hover {
     background-color: black;
     color: #4CAF50;
@@ -274,7 +285,7 @@ main{
 	width: 99%;
 	margin: auto;
 }
-  
+
 /*** Adding Styles to Copyright Div ***/
 .copyright
 {
@@ -284,14 +295,14 @@ main{
 	text-align: center;
 	background: #4CAF50;
 }
-     
+
 .copyright p
 {
 	letter-spacing: 1px;
 	font-size: 0.90em;
 	color: rgba(255, 255, 255, 0.6);
 }
-     
+
 .copyright a
 {
 	text-decoration: none;
