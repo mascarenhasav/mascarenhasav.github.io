@@ -48,7 +48,7 @@ ol, ul{
 header{
 	overflow: hidden;
 	border: 1px solid yellow;
-	height: 40%;
+	height: 8%;
 	width: 99%;
 	padding: none;
 	margin: auto;
@@ -131,27 +131,20 @@ header{
 	text-decoration: none;
 }
 
-/*****************************/
-/* Styling Header Image Menu */
-/*****************************/
-#header-image-menu{
-	float: left;
-	position: relative;
-	height:75%;
-	border: 0px solid red;
-	width: 15%;
-}
+/**********************************/
+/* Styling Main content Section 1 */
+/**********************************/
 
-#header-image-menu img{
-	float: left;
-	width: 80%;
-	height: 100%;
+main{
+	overflow: hidden;
+	border: 1px solid white;
+	height: 82%;
+	width: 99%;
+	padding: none;
 	margin: auto;
-	padding: auto;
-	border: 0em solid green;
 }
 
-#welcome
+#section1
 {
 	text-align: left;
 	overflow: hidden;
@@ -160,56 +153,7 @@ header{
 	margin: auto;
 	font-size: 1em;
 	border: 0px solid green;
-}
-
-#welcome .title{
-	margin: auto;
-	margin-top: 1%;
-	color: white;
-}
-#welcome .titleProject{
-	margin: auto;
-	margin-top: 1%;
-	color: white;
-	font-size: 1em;
-}
-#welcome .a{
-	text-decoration: underline;
-
-}
-#welcome a:active {color:black}
-#welcome a:visited {color:green}
-
-
-#welcome p{
-	margin-bottom: 0px;
-	color: 00a800;
-}
-
-
-/**********************************/
-/* Styling Main content Section 1 */
-/**********************************/
-main{
-	overflow: hidden;
-	border: 1px solid white;
-	height: 50%;
-	width: 99%;
-	padding: none;
-	margin: auto;
-}
-
-#section1
-{
-	overflow: hidden;
-	margin-top: 0.5em;
-	padding-top: 0em;
-	text-align: center;
-	height: 100%;
-	width:100%;
-	border: 1px solid green;
-	padding: auto;
-	margin: auto;
+	overflow-x: auto;
 }
 
 #section1 .title{
@@ -225,40 +169,42 @@ main{
 	color: 00a800;
 }
 
-
-.row #column1{
-	float: center;
+#section1 .titleProject{
 	margin: auto;
-	padding: 1% 5% 1% 5%;
-}
-
-
-.column-title h2{
-	margin: 1em 0em;
-	font-size: 1.6em;
-	font-weight: 700;
+	margin-top: 1%;
 	color: white;
+	font-size: 1em;
+}
+#section1 .a{
+	text-decoration: underline;
+}
+#section1 a:active {color:black}
+#section1 a:visited {color:green}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    width: 100%;
+    overflow-x: auto;
 }
 
-.button {
-    text-decoration: none;
-    text-align: center;
-    display: inline-block;
-    font-size: 1em;
-    background-color: #4CAF50;
-    color: white;
-    border: 2px solid #4CAF50;
-    padding: 0.5em 1em;
-    margin: 0.1em 0.05em;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
+.project {
+    background-color: #001010;
+    min-height: 8%;
+    margin: 1%;
+    text-align: left;
 }
 
-.button:hover {
-    background-color: black;
-    color: #4CAF50;
+@media (min-width:1330px) {
+    .content {
+        justify-content: center;
+    }
 }
+
+
+
 
 
 
@@ -267,10 +213,9 @@ main{
 /**********************************/
 
 #footer{
-	height: 9%;
+	height: 10%;
 	width: 99%;
 	margin: auto;
-	border: 2px solid black;
 }
 
 /*** Adding Styles to Copyright Div ***/
