@@ -71,7 +71,7 @@ header{
 	margin: none;
 	height: 100%;
 	color: green;
-	width: 29%;
+	width: 39%;
 	text-align: left;
 }
 
@@ -89,7 +89,7 @@ header{
 /***************************/
 #menu{
 	float: right;
-	width: 70%;
+	width: 60%;
 	height: 100%;
 	margin: none;
 	border: 0px solid white;
