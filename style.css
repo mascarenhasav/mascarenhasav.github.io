@@ -4,7 +4,8 @@ section {
 }
 
 body {
-  background-color: #1e252e;
+  /*background-color: #1e252e;*/
+  background-color: #272822;
   color: #e6e6e6;
 }
 
@@ -25,11 +26,11 @@ pre {
 }
 
 #dollar {
-  color: #24D1E7;
+  color: #66D9EF;
 }
 
 #dash {
-  color: #53E2AE;
+  color: #A6E223;
 }
 
 #cursor {
