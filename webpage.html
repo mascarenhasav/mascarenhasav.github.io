@@ -8,6 +8,7 @@
 
     <script src="scramble.js"></script>
 
+
     <link rel="icon" href="images/header-logo.ico" />
     <link rel="shortcut icon" href="images/header-logo.ico" />
     <link rel="stylesheet" type="text/css" href="style.css" />
@@ -24,12 +25,45 @@
       <pre>
 
 <strong>MAN(1)       <span id="top">THIS IS MY PERSONAL WEBSITE, WELCOME! :)</span>       MAN(1)</strong>
-			under construction ...			     <a href="https://mascarenhasav.github.io/publications">>></a>
+			under construction ...			           <a href="https://mascarenhasav.github.io/publications">>></a>
 
 <span id="title">NAME</span>
 	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$ whoami
 		> Alexandre Mascarenhas		
+		> If you are brave (or/and crazy) and want to see me, 
+		please tell me, what is the Answer to the Great Question... 
+		of Life, the Universe and Everything?
+			><a><input id="answer" type="text" style="margin:10px" autofocus required><button type="button" id="ans">Try</button></a>
+			<script>
+		    function displayMessage(){
+				if (document.getElementById) {
+				   w = screen.availWidth;
+				   h = screen.availHeight;
+				}  
 
+				var popW = 300, popH = 430;
+				var leftPos = (w-popW)/2;
+				var topPos = (h-popH)/2;
+				msgWindow = window.open('','popup','width=' + popW + ',height=' + popH + 
+					                         ',top=' + topPos + ',left=' + leftPos + ',       scrollbars=yes');
+
+				if(document.getElementById("answer").value == "42"){
+					msgWindow.document.write 
+					    ('<HTML><HEAD><TITLE>Centered Window</TITLE></HEAD><BODY style="background-color:#000000;"><FORM    NAME="form1">' +
+					    '<img src="./images/me.jpg" height="380"><br/>'+'<font color="green">Nice :)</font><br/>'+
+					    '<INPUT TYPE="button" VALUE="Thanks" onClick="window.close();"></FORM></BODY>   </HTML>');
+				}else{
+					msgWindow.document.write 
+					    ('<HTML><HEAD><TITLE>Centered Window</TITLE></HEAD><BODY style="background-color:#000000;"><FORM    NAME="form1">' +
+					    '<img src="./images/luffy-smile.jpg" width="280"><br/><br/>'+'<font color="green">Oh :( This is a wrong answer. Sry<br/>But you can see the little luffy :)</font><br/>'+
+					    '<INPUT TYPE="button" VALUE="Thanks" onClick="window.close();"></FORM></BODY>   </HTML>');
+				}
+			
+			}
+		       
+		    var btn = document.getElementById("ans");
+		    btn.addEventListener("click", displayMessage);
+		    </script>
 <span id="title">SYNOPSIS</span>
 	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$ about
 		> Atualmente trabalho como Técnico de manutenção no Metro 
