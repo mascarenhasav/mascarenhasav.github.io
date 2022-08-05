@@ -5,9 +5,10 @@ section {
 
 body {
   /*background-color: #1e252e;*/
-  /*background-color: #272822;*/
-  background-color: #333333;
+  background-color: #272822;
+  /*background-color: #333333;*/
   color: #e6e6e6;
+  color: #EEEEEC;
 }
 
 pre {
@@ -18,11 +19,13 @@ pre {
 
 #top {
   color: #6498EF;
+  color: #357C4C;
   font-size: 18px;
 }
 
 #title {
   color:#EE4F84; 
+  color:#357C4C;
   font-weight:bold;
 }
 
@@ -32,6 +35,7 @@ pre {
 
 #dash {
   color: #A6E223;
+  color:#FFD700;
 }
 
 #cursor {
