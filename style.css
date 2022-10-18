@@ -1,64 +1,89 @@
 section {
-  width: 640px;
-  margin: 36px auto;
+	width: 640px;
+	margin: 36px auto;
 }
 
 body {
-  /*background-color: #1e252e;*/
-  background-color: #272822;
-  /*background-color: #333333;*/
-  color: #e6e6e6;
-  color: #EEEEEC;
+	background-color: #1c1c1c;
+	color: #e6e6e6;
+	color: #EEEEEC;
 }
 
 pre {
-  line-height: 1.3;
-  font-size: 14px;
-  font-family: Hack, "Source Code Pro", "Inconsolata", "Ubuntu", "Andale Mono", "Lucida Console", monospace;
+	line-height: 1.3;
+	font-size: 14px;
+	font-family: Hack, "Source Code Pro", "Inconsolata", "Ubuntu", "Andale Mono", "Lucida Console", monospace;
 }
 
 #top {
-  color: #6498EF;
-  color: #357C4C;
-  font-size: 18px;
+	color: #6498EF;
+	color: #357C4C;
+	color:#468a1a;
+	font-size: 18px;
 }
 
 #title {
-  color:#EE4F84; 
-  color:#357C4C;
-  font-weight:bold;
+	color:#EE4F84; 
+	color:#357C4C;
+	color:#468a1a;
+	font-weight:bold;
 }
 
+#synopsis {
+}
+
+textarea{
+	font-size: 14px;
+	resize: none;
+	text-align: justify;
+	white-space: pre-line;
+	-moz-text-align-last: left;
+	text-align-last: left;
+	background-color: #1c1c1c;
+	color: #EEEEEC;
+	border: none;
+	overflow: auto;
+	outline: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+
 #dollar {
-  color: #66D9EF;
+	color: #66D9EF;
 }
 
 #dash {
-  color: #A6E223;
-  color:#FFD700;
+	color: #A6E223;
+	color: #FFD700;
 }
 
 #cursor {
-  animation-name: cursor;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  display: inline-block;
+	animation-name: cursor;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	display: inline-block;
 }
 
 @keyframes cursor {
-  0% { background-color: #fff }
-  5% { background-color: #1e252e }
-  50% { background-color: #1e252e }
-  55% { background-color: #fff }
-  100% { background-color: #fff }
+	0% { background-color: #fff }
+	5% { background-color: #1e252e }
+	50% { background-color: #1e252e }
+	55% { background-color: #fff }
+	100% { background-color: #fff }
 }
 
 a {
-    color: #0bc;
+	color: #0bc;	
 }
 
 a:visited {
-  color: #985EFF;
+	color: #985EFF;
 }
 
 input[type="text"] {

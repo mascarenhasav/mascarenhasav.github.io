@@ -27,73 +27,88 @@
 			                      			           <a href="https://mascarenhasav.github.io/publications">>></a>
 
 <span id="title">NAME</span>
-	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$<span id="dollar"> whoami </span>
-		> [ <strong>Alexandre Mascarenhas</strong> ] <a href="./files/CV_EN.pdf" target="_blank">[ CV(EN) ]</a> <a href="./files/CV_EN.pdf" target="_blank">[ CV(PT) ]</a>           ]
-		> [ What is the Answer to the Great Question ... of Life,   ] 
-		  [ the Universe and Everything?                            ]
-		  [ *Please do not be scared by what you will see.          ] 
-			><a><input id="answer" type="text" style="margin:10px" autofocus required><button type="button" id="ans">Try</button></a>
-			<script>
+	Hello! I am <strong>Alexandre Mascarenhas</strong> <a href="./files/CV_EN.pdf" target="_blank">[ CV(EN) ]</a><a href="./files/CV_EN.pdf" target="_blank">[ CV(PT) ]</a> Please make
+	yourself at home! But first...
+
+	What is the Answer to the Great Question ... of Life, the Universe
+	and Everything?   
+	*Please do not be scared by what you can see.         
+		><a><input id="answer" type="text" style="margin:10px" autofocus required><button type="button" id="ans">Try</button></a>
+		<script>
 		    function displayMessage(){
-				if (document.getElementById) {
-				   w = screen.availWidth;
-				   h = screen.availHeight;
-				}  
+			if (document.getElementById) {
+			   w = screen.availWidth;
+			   h = screen.availHeight;
+			}  
 
-				var popW = 300, popH = 430;
-				var leftPos = (w-popW)/2;
-				var topPos = (h-popH)/2;
-				msgWindow = window.open('','popup','width=' + popW + ',height=' + popH + 
-					                         ',top=' + topPos + ',left=' + leftPos + ',       scrollbars=yes');
+			var popW = 300, popH = 430;
+			var leftPos = (w-popW)/2;
+			var topPos = (h-popH)/2;
+			msgWindow = window.open('','popup','width=' + popW + ',height=' + popH + 
+				                         ',top=' + topPos + ',left=' + leftPos + ',       scrollbars=yes');
 
-				if(document.getElementById("answer").value == "42"){
-					msgWindow.document.write 
-					    ('<HTML><HEAD><TITLE>Me</TITLE></HEAD><BODY style="background-color:#000000;"><FORM    NAME="form1">' +
-					    '<img src="./images/me.jpg" height="380"><br/>'+'<font color="green">Well done! :)</font><br/>'+
-					    '<INPUT TYPE="button" VALUE="Thanks" onClick="window.close();"></FORM></BODY>   </HTML>');
-				}else{
-					msgWindow.document.write 
-					    ('<HTML><HEAD><TITLE>Little Luffy</TITLE></HEAD><BODY style="background-color:#000000;"><FORM    NAME="form1">' +
-					    '<img src="./images/luffy-smile.jpg" width="280"><br/><br/>'+'<font color="green">Oh :( This is not the answer. Sry<br/>But you can see the little luffy :)</font><br/>'+
-					    '<INPUT TYPE="button" VALUE="Thanks" onClick="window.close();"></FORM></BODY>   </HTML>');
-				}
-			
+			if(document.getElementById("answer").value == "42"){
+				msgWindow.document.write 
+				    ('<HTML><HEAD><TITLE>Me</TITLE></HEAD><BODY style="background-color:#000000;"><FORM    NAME="form1">' +
+				    '<img src="./images/me.jpg" height="380"><br/>'+'<font color="green">Well done! :)</font><br/>'+
+				    '<INPUT TYPE="button" VALUE="Thanks" onClick="window.close();"></FORM></BODY>   </HTML>');
+			}else{
+				msgWindow.document.write 
+				    ('<HTML><HEAD><TITLE>Little Luffy</TITLE></HEAD><BODY style="background-color:#000000;"><FORM    NAME="form1">' +
+				    '<img src="./images/luffy-smile.jpg" width="280"><br/><br/>'+'<font color="green">Oh :( This is not the answer. Sry<br/>But you can see the little luffy :)</font><br/>'+
+				    '<INPUT TYPE="button" VALUE="Thanks" onClick="window.close();"></FORM></BODY>   </HTML>');
 			}
-		       
-		    var btn = document.getElementById("ans");
-		    btn.addEventListener("click", displayMessage);
-		    </script>
+			
+		}
+	       
+		var btn = document.getElementById("ans");
+		btn.addEventListener("click", displayMessage);
+	    </script>
 <span id="title">SYNOPSIS</span>
-	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$ <span id="dollar">about</span>
-		> [ I am from Brazil and currently working as a maintenance ] 
-		  [ technician at Sao Paulo Metro. I am studying for a      ]
-		  [ Master's degree in Computer science at the University of]
-		  [ Tsukuba in Japan under the supervision of Professor     ]
-		  [ Claus Aranha.                                           ]
-		> [ I am interested in research in the area of: evolutionary]
-		  [ computation, artificial intelligence, neuroscience and  ]
-		  [ public transport systems.                               ]
-		> [ My favourite hobbies are skateboarding, playing football]
-		  [ travelling by bike and music in general.                ]
+	<a id="warning_text" style="color: red; font-weight: bold"></a>
+	<textarea cols="65" rows="13"  id="synopsis" >
+	I am from Brazil and currently working as a maintenance	technician at Sao Paulo Metro and as a Research Assistant at University of Tsukuba.
 
+	As a master's degree student in Computer science at the University of Tsukuba in Japan under the supervision of Professor Claus Aranha, my research interests are in the field of: evolutionary computation, artificial intelligence, neuroscience and  public transport systems.
+
+	My favourite hobbies are skateboarding, playing football travelling by bike and music in general.
+	</textarea>
+	<script>
+	document.getElementById('synopsis').onkeyup = function(){
+		document.getElementById('warning_text').innerHTML = "Yes, you can type here :) but be gentle.";
+		var text_value = document.getElementById('synopsis').value;
+		if((text_value.includes("fuck") === true) || (text_value.includes("suck") === true)      || (text_value.includes("sex") === true)       ||
+		(text_value.includes("bastard") === true) || (text_value.includes("idiot") === true)     || (text_value.includes("ass") === true)       ||
+		(text_value.includes("bitch") === true)   || (text_value.includes("dammit") === true)    || (text_value.includes("shit") === true)      ||
+		(text_value.includes("foda") === true)    || (text_value.includes("idiota") === true)    || (text_value.includes("cuzao") === true)     ||
+		(text_value.includes("porra") === true)   || (text_value.includes("puta ") === true)      || (text_value.includes("caralho") === true)   ||
+		(text_value.includes("buceta") === true)  || (text_value.includes("arrombado") === true) || (text_value.includes("arrombada") === true) ||
+		(text_value.includes("merda") === true)   || (text_value.includes("cu ") === true)){
+			document.getElementById('warning_text').innerHTML = "Please do not use this kind of word :(";
+		}else{
+			document.getElementById('warning_text').innerHTML = "Yes, you can type here :) but be gentle.";
+		}
+	};
+                
+	</script>
 <span id="title">DESCRIPTION</span>
-	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$ <span id="dollar">content</span>
-		> <a href="https://mascarenhasav.github.io/publications.html">[ /Publications/ ]</a>
-		> <a href="https://mascarenhasav.github.io/projects.html">[ /Pojects/ ]</a>
-		> <a href="https://mascarenhasav.github.io/blog.html">[ /Blog/ ]</a>
-		> <a href="https://mascarenhasav.github.io/terminaltor">[ /Terminaltor/ ]</a>
+	<span id="dash">mascarenhasav@(</span>:<span id="dollar">~</span>$ <span id="dollar">Content</span>
+		<a href="https://mascarenhasav.github.io/publications.html">[ /Publications/ ]</a>
+		<a href="https://mascarenhasav.github.io/projects.html">[ /Pojects/ ]</a>
+		<a href="https://mascarenhasav.github.io/blog.html">[ /Blog/ ]</a>
+		<a href="https://mascarenhasav.github.io/terminaltor">[ /Terminaltor/ ]</a>
 
-	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$ <span id="dollar">contact</span>
-		> <a href="https://github.com/mascarenhasav">[ Github ]</a>
-		> <a href="https://linkedin.com/in/alexandre-mascarenhas-2889b890/">[ Linkedin ]</a>
-		> <nobr id="email"><a href="#" onclick="emailScramble.initAnimatedBubbleSort();">unscramble</a>
+	<span id="dash">mascarenhasav@(</span>:<span id="dollar">~</span>$ <span id="dollar">Contact</span>
+		<a href="https://github.com/mascarenhasav">[ Github ]</a>
+		<a href="https://linkedin.com/in/alexandre-mascarenhas-2889b890/">[ Linkedin ]</a>
+		<nobr id="email"><a href="#" onclick="emailScramble.initAnimatedBubbleSort();">unscramble</a>
 		 </nobr><script>emailScramble = new scrambledString(document.getElementById('email'), 'emailScramble', 'mascarenhasav@gmail.com', [3,7,17,5,6,2,10,14,13,15,9,8,11,12,4,16,19,18,1,20]);
 		 </script>
 
-	<span id="dash">rmeanshcaas@(</span>:<span id="dollar">~</span>$ <span id="dollar">quote</span>
-		> [ "<i>... Isso é o reflexo da nossa atualidade,</i>  ]
-		> [ <i>eh o espelho derradeiro da realidade ..."</i>   ]
-		> [ <span id="title">Brown, Mano</span> ]
+	<span id="dash">mascarenhasav@(</span>:<span id="dollar">~</span>$ <span id="dollar">quote</span>
+		"<i>... Isso é o reflexo da nossa atualidade,</i>  
+		<i>eh o espelho derradeiro da realidade ..."</i>   
+		<span id="title">Brown, Mano</span>
 
 <!-- <span id="dollar">$ </span><pre id="cursor">&nbsp;</pre> -->
 </pre>
