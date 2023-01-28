@@ -1,7 +1,7 @@
 section {
-	width: 800px;
-	height: 600px;
-	margin: 36px auto;
+	width: 1040px;
+	height: 800px;
+	margin: 24px auto;
 	border: 0px solid;
 }
 
@@ -10,12 +10,13 @@ body {
 	border: 0px solid;
 	color: #e6e6e6;
 	color: #808080;
+    font-size: 18px;
 }
 
 pre {
 	height: 580px;
 	line-height: 1.3;
-	font-size: 14px;
+	font-size: 18px;
 	border: 0px solid;
 	font-family: Hack, "Source Code Pro", "Inconsolata", "Ubuntu", "Andale Mono", "Lucida Console", monospace;
 }
@@ -23,16 +24,16 @@ pre {
 
 .myHead {
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: left;
+	justify-content: left;
 	color:#b0b0b0;
-	font-size: 42px;
+	font-size: 20px;
 }
 
 .myHead blink::after {
 	content: "";
-	width: 20px;
-	height: 50px;
+	width: 10px;
+	height: 22px;
 	background: #b0b0b0;
 	display: inline-block;
 	animation: cursor-blink 1.5s steps(2) infinite;
@@ -110,7 +111,7 @@ pre {
 
 #top {
 	color: #468a1a;
-	font-size: 18px;
+	font-size: 20px;
 }
 
 
@@ -119,7 +120,34 @@ pre {
 	color:#EE4F84; 
 	color:#357C4C;
 	color:#468a1a;
+    font-size: 20px;
 	font-weight:bold;
+}
+
+
+
+#divName {
+   word-wrap:break-word; 
+   white-space: normal;
+   width: 1040px;
+}
+
+#divSynopsis {
+   word-wrap:break-word; 
+   white-space: normal;
+   width: 1040px;
+}
+
+#divDescription {
+   word-wrap:break-word; 
+   white-space: normal;
+   width: 1040px;
+}
+
+#divReferences {
+   word-wrap:break-word; 
+   white-space: normal;
+   width: 1040px;
 }
 
 
