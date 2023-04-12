@@ -26,10 +26,14 @@
 <div style="float: left">ALGORITMOS(1)</div><div style="float: right">ALGORITMOS(1)</div><div style="margin: 0 auto; width: 100%; text-align: center"><span id="top">Genetic Algorithm (GA)</span></div>
 <div id="google_translate_element"></div>
 <script type="text/javascript">
+function setCookie(key, value, expiry) {
+  var expires = new Date();
+  expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+  document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+
 function googleTranslateElementInit() {
-<div id="google_translate_element"></div>
-<script type="text/javascript">
-	setCookie('googtrans', '/en/pt',1);
+	setCookie('googtrans', '/pt/en',1);
 	new google.translate.TranslateElement(
 		{pageLanguage: 'pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'
 	);
