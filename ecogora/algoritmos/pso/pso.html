@@ -23,24 +23,49 @@
 <section>
 <pre>
 
-<div style="float: left">ALGORITMOS(2)</div><div style="float: right">ALGORITMOS(2)</div><div style="margin: 0 auto; width: 100%; text-align: center"><span id="top">Particle Swarm Optimization (PSO)</span></div>
+<div style="float: left">ALGORITMOS(1)</div><div style="float: right">ALGORITMOS(1)</div><div style="margin: 0 auto; width: 100%; text-align: center"><span id="top">Particle Swarm Optimization (PSO)</span></div>
+<div id="google_translate_element"></div>
+> <a href="https://ecogora.vercel.app">[ Home ]</a>
 
+<script type="text/javascript">
+function setCookie(key, value, expiry) {
+  var expires = new Date();
+  expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+  document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+
+function googleTranslateElementInit() {
+	setCookie('googtrans', '/pt/en',1);
+	new google.translate.TranslateElement(
+		{pageLanguage: 'pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'
+	);
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <div class="myHead">
 <span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> NOME</span>
 </div>
-
 <div id="divName"> 
-<p> O algoritmo Particle Swarm Optimization (PSO), que pode ser traduzido como ...
+<p> O PSO (Particle Swarm Optimization) é um algoritmo de otimização global baseado em população que foi inspirado no comportamento de agrupamentos de animais, como pássaros e cardumes de peixes.
+O algoritmo começa com um grupo de partículas, cada uma representando uma solução candidata. Essas partículas se movem no espaço de busca procurando a solução ótima. Cada partícula mantém a memória de sua melhor posição encontrada até o momento e, através da interação social com as outras partículas, busca encontrar uma solução melhor.
+As partículas são atraídas para a posição das melhores partículas em seu grupo e também são influenciadas por sua própria melhor posição. A direção e velocidade de cada partícula são atualizadas a cada iteração do algoritmo, permitindo que elas explorem o espaço de busca de forma cooperativa.
+O algoritmo PSO tem sido amplamente utilizado para problemas de otimização em diversas áreas, como engenharia, ciência da computação, finanças, entre outras. Sua eficácia e facilidade de implementação o tornam uma escolha popular para a resolução de problemas de otimização complexos.
 </p>
 </div>
-
 <div class="myHead">
 <span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> SINOPSE</span>
 </div>
 <div id="divSynopsis"> 
-<p>As principais caracteristicas dele sao ...
-<br>
-
+<p>As principais caracteristicas dele sao:
+<ul>
+<li>Baseado em população: o algoritmo PSO é baseado em uma população de soluções candidatas (partículas), em vez de apenas uma única solução.</li>
+<li>Cooperação: as partículas cooperam entre si, compartilhando informações sobre as melhores soluções encontradas. Isso permite que o algoritmo explore mais efetivamente o espaço de busca.</li>
+<li>Atualizações contínuas: as posições e velocidades das partículas são atualizadas continuamente em cada iteração do algoritmo, permitindo que as partículas se movam no espaço de busca.</li>
+<li>Memória: cada partícula mantém a memória de sua melhor posição encontrada até o momento, permitindo que ela siga em direção a essa posição.</li>
+<li>Flexibilidade: o algoritmo PSO pode ser facilmente adaptado para problemas de otimização com diferentes características, como problemas multi-objetivo ou com restrições.</li>
+<li>Eficiência: o algoritmo PSO é conhecido por sua eficiência na solução de problemas de otimização, especialmente quando comparado a outras técnicas de otimização global, como algoritmos genéticos.</li>
+<li>Simplicidade: o algoritmo PSO é relativamente simples e fácil de implementar, o que o torna uma opção popular para a resolução de problemas de otimização em várias áreas.</li>
+</ul>
 </p>
 </div>
 
@@ -48,7 +73,19 @@
 <span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> DESCRICAO</span>
 </div>
 <div id="divSynopsis"> 
-<p>	O funcionamente dele eh o seguinte ...
+<p>	O funcionamente dele eh o seguinte:
+<ol>
+<li>Uma populacao inicial eh gerada, usualmente aleatoria, porem, caso seja conhecida alguma informacao que ajude a conhecer a solucao do problema, essa informacao pode ser usada para gerar uma populacao inicial "mais adequada" ao problema.</li>
+<li>A populacao inicial eh entao avaliada, para saber o quao boa ela eh para o problema em questao.</li>
+<li>Caso ela ja seja boa o suficiente (essa suficiencia eh pre-definida e depende do problema, poder computacional, precisao desejada, etc ...), o algoritmo acaba ai, pois ja existe uma solucao boa o sufiente.</li>
+<li>Caso a populacao ainda nao seja uma solucao boa o suficiente eh entao aplicado os operadores do algoritmo.</li>
+<li>Que no caso do GA, podem ser: Selecao, Mutacao, Cruzamento, Elitismo (diversas variacoes desses operadores, bem como outros operadores foram ao longo do tempo sendo acrescentados no GA original e dao caracteristicas diferentes ao algoritmo, e pode ser uteis ou nao a depender do problema).</li>
+<li>Apos aplicados os operadores na populacao, uma nova populacao eh obtida com essas mudancas. Essa nova populacao pode ou nao ser mais adequada como solucao do problema.</li>
+<li>A nova populacao eh avaliada.</li>
+<li>Os passos 3-7 sao entao repetidos ate que se obtenha uma populacao que seja uma solucao suficientemente boa para o problema (ou, caso o numero maximo de geracoes pre-definido tenha sido alcancado).</li>
+</ol>
+<img class="fit-picture" src="GA-schema.png" alt="Schema of GA algorithm" style="width:100%;height:400px;">
+
 
 </p>
 </div>
@@ -58,19 +95,25 @@
 <span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> BORA FAZER</span>
 </div>
 <div id="divSynopsis"> 
-<p>	Vamos agora utilizar na pratica este algoritmo para resolver alguns problemas ...
+<p>	Vamos agora utilizar na pratica este algoritmo.
+
+
 
 </p>
 </div>
 
 <div class="myHead">
-<span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> REFERENCIAS</span>
+<span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> REFERENCIAS E SUGESTOES</span>
 </div>
 <div id="divSynopsis"> 
-<p>	Foram usadas as seguintes referencias:
-
-...
-
+<p>
+<ul>
+<li>Um excelente artigo que faz uma revisao do algoritmo GA:<br>
+Katoch, S., Chauhan, S.S. & Kumar, V. A review on genetic algorithm: past, present, and future. Multimed Tools Appl 80, 8091–8126 (2021). https://doi.org/10.1007/s11042-020-10139-6</li>
+<li>Biblioteca DEAP utilizada nos codigos:<br>
+https://deap.readthedocs.io/en/master/<br>
+Félix-Antoine Fortin, François-Michel De Rainville, Marc-André Gardner, Marc Parizeau, Christian Gagné; 13(70):2171−2175, 2012.</li>
+</ul>
 </p>
 <p>
 Uso deste artigo em referencias:<br> 
