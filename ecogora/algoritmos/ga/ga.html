@@ -64,7 +64,16 @@ function googleTranslateElementInit() {
 <li>População: o algoritmo genético trabalha com uma população de indivíduos, permitindo explorar diversas soluções em paralelo e aumentando a chance de encontrar a melhor resposta.</li>
 </ul>
 
-A seguir uma explicacao mais detalhada desses operadores:
+
+</p>
+</div>
+
+<div class="myHead">
+<span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> DESCRICAO</span>
+</div>
+<div id="divSynopsis"> 
+<p>	
+A seguir uma explicacao mais detalhada de alguns operadores:
 
 <h1>Selecao</h1>
 A seleção é uma das etapas fundamentais do algoritmo genético e tem como objetivo escolher os indivíduos mais adaptados do grupo para gerar a próxima geração. Existem diferentes estratégias de seleção que podem ser utilizadas, tais como:
@@ -76,14 +85,20 @@ A seleção é uma das etapas fundamentais do algoritmo genético e tem como obj
 </ul>
 Em resumo, a seleção é uma etapa crucial do algoritmo genético, pois é responsável por garantir que os indivíduos mais adaptados sejam mantidos e possam gerar descendentes igualmente adaptados.
 
-</p>
-</div>
+<h1>Crossover</h1>
+O crossover, também conhecido como recombinação genética, é uma das etapas essenciais do algoritmo genético. Ele é responsável por criar novas combinações de genes a partir dos pais selecionados na etapa de seleção, criando assim uma nova geração de indivíduos.
+O processo de crossover consiste em escolher dois indivíduos (ou pais) da população selecionada na etapa anterior e misturar aleatoriamente os seus genes, criando um novo indivíduo (ou filho). Esse processo é repetido até que sejam gerados todos os indivíduos necessários para a nova geração.
+Existem diversas técnicas de crossover que podem ser utilizadas, dentre as quais destacam-se:
+<ul>
+<li>Crossover de um ponto: Nessa técnica, um ponto é escolhido aleatoriamente na sequência de genes dos pais e os seus segmentos são trocados, gerando assim dois filhos.
+<li>Crossover de dois pontos: Nessa técnica, dois pontos são escolhidos aleatoriamente na sequência de genes dos pais e os segmentos entre esses pontos são trocados, gerando assim dois filhos.
+<li>Crossover uniforme: Nessa técnica, cada gene é escolhido aleatoriamente de um dos pais, gerando assim um novo filho.
+<li>Crossover aritmético: Nessa técnica, os genes dos pais são combinados de forma ponderada, gerando assim um filho que é uma média ponderada dos pais.
+</ul>
+O objetivo do crossover é aumentar a diversidade genética da população, permitindo a exploração de novas combinações genéticas que possam ser mais adaptadas ao ambiente em questão. É importante ressaltar que o sucesso do crossover depende tanto da escolha adequada da técnica de crossover quanto do tipo de problema a ser resolvido.
 
-<div class="myHead">
-<span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top"> DESCRICAO</span>
-</div>
-<div id="divSynopsis"> 
-<p>	O funcionamente dele eh o seguinte:
+
+<h1>>O funcionamento do algoritmo eh o seguinte:</h1>
 <ol>
 <li>Uma populacao inicial eh gerada, usualmente aleatoria, porem, caso seja conhecida alguma informacao que ajude a conhecer a solucao do problema, essa informacao pode ser usada para gerar uma populacao inicial "mais adequada" ao problema.</li>
 <li>A populacao inicial eh entao avaliada, para saber o quao boa ela eh para o problema em questao.</li>
