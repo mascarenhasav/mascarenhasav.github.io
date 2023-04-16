@@ -251,6 +251,30 @@ A primeira coisa a se fazer no codigo eh importar as bibliotecas que serao utili
 
 As linhas de 1-4 estao importando algumas funcoes que utilizaremos da biblioteca Deap. As linhas de 5-8 sao bibliotecas nativa do python que utilizaremos e por fim, na linha 9 estamos importanto o arquivo fitFunction.py que devera estar na mesma pasta do codigo principal. Mais para frente trataremos deste arquivo.
 <br><br>
+Antes de comecarmos a criar as funcoes dos operadores, iremos criar uma variavel onde sera feita a parametrizacao do algoritmo, onde definiremos por exemplo, o numero de invididuos da populacao, tamanho dos Individuos, taxa de mutacao e etc...
+
+<div>
+<code>
+<hr>
+1:  parameters = {<br>
+2:	&emsp;"POPSIZE": 100,<br>
+3:	&emsp;"INDSIZE": 8,<br>
+4:	&emsp;"NDIM": 1,<br>
+5:	&emsp;"MIN": -100,<br>
+6:	&emsp;"MAX": 100,<br>
+7:	&emsp;"NEVALS": 200000,<br>
+8:	&emsp;"RUNS": 1,<br>
+9:	&emsp;"ELI": 0.2,<br>
+10:	&emsp;"SEL": 0.2,<br>
+11:	&emsp;"CROSS": 1,<br>
+12:	&emsp;"MUT": 0.001,<br>
+13:	&emsp;"TYPE": "CHAR",<br>
+14:	&emsp;"BENCHMARK": "HORO"}
+</code>
+<hr>
+</div>
+
+<br><br>
 Criaremos agora uma funcao, chamada <b>createToolbox</b>, onde utilizaremos algumas ferramentas da biblioteca Deap para gerarmos os Individuos e a Populacao.
 
 <div>
