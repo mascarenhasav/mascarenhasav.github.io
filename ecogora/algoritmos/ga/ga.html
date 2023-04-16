@@ -66,7 +66,7 @@ Já o <b>fenótipo</b> é a manifestação externa das características do Indiv
 No algoritmo genético, o processo de seleção, crossover e mutação atua sobre o genótipo dos <b>Indivíduos</b>, permitindo a geração de novas soluções candidatas que serão avaliadas a partir do seu fenótipo. O objetivo do algoritmo é encontrar a solução que otimiza a função de avaliação a partir da manipulação do genótipo dos indivíduos ao longo das gerações.
 <br>
 E por fim, temos a <b>Populacao</b>, que eh composta por 1 ou mais individuos.
-<h4 style="color:green">CHECKPOINT</h4>
+<h3 style="color:green">CHECKPOINT</h3>
 Conceitos que devem estar claros ate aqui: <b>Populacao</b>, <b>Individuo</b> e <b>Gene</b>.
 
 <h2>Principais caracteristicas:</h2>
@@ -91,7 +91,7 @@ A seguir uma explicacao mais detalhada de alguns operadores, porem, como vimos a
 Dessa forma, quando queremos utilizar o GA para um problema em que a solucao sao numeros reais por exemplo, e nao bytes, devemos fazer a <b>Codificacao</b> e <b>Decodificacao</b> desses valores reais.
 
 <h1 style="color: green">OPERADORES</h1>
-<h4>Selecao</h4>
+<h3>Selecao</h3>
 A seleção é uma das etapas fundamentais do algoritmo genético e tem como objetivo escolher os indivíduos mais adaptados do grupo para gerar a próxima geração. Existem diferentes estratégias de seleção que podem ser utilizadas, tais como:
 <ul>
 <li><b>Seleção por torneio:</b> Nessa estratégia, são escolhidos aleatoriamente alguns indivíduos da população e é selecionado o melhor entre eles para fazer parte da próxima geração. Esse processo é repetido até que sejam selecionados todos os indivíduos necessários para formar a próxima geração.</li>
@@ -101,7 +101,7 @@ A seleção é uma das etapas fundamentais do algoritmo genético e tem como obj
 </ul>
 Em resumo, a seleção é uma etapa crucial do algoritmo genético, pois é responsável por garantir que os indivíduos mais adaptados sejam mantidos e possam gerar descendentes igualmente adaptados.
 
-<h4>Crossover</h4>
+<h3>Crossover</h3>
 O crossover, também conhecido como recombinação genética, é uma das etapas essenciais do algoritmo genético. Ele é responsável por criar novas combinações de genes a partir dos pais selecionados na etapa de seleção, criando assim uma nova geração de indivíduos.
 O processo de crossover consiste em escolher dois indivíduos (ou pais) da população selecionada na etapa anterior e misturar aleatoriamente os seus genes, criando um novo indivíduo (ou filho). Esse processo é repetido até que sejam gerados todos os indivíduos necessários para a nova geração.
 Existem diversas técnicas de crossover que podem ser utilizadas, dentre as quais destacam-se:
@@ -119,7 +119,7 @@ Iremos implementar mais adiante a primeira, <b>Crossover de um ponto</b>, que po
 
 O objetivo do crossover é aumentar a diversidade genética da população, permitindo a exploração de novas combinações genéticas que possam ser mais adaptadas ao ambiente em questão. É importante ressaltar que o sucesso do crossover depende tanto da escolha adequada da técnica de crossover quanto do tipo de problema a ser resolvido.
 
-<h4>Mutacao</h4>
+<h3>Mutacao</h3>
 A mutação é uma das etapas essenciais do algoritmo genético, juntamente com a seleção e o crossover. A sua função é introduzir variações aleatórias nos indivíduos da população, permitindo a exploração de novas soluções que possam ser mais adaptadas ao ambiente em questão.
 O processo de mutação consiste em alterar aleatoriamente um ou mais genes de um indivíduo da população. Essa alteração pode ocorrer de diversas formas, tais como:
 <ul>
@@ -137,7 +137,7 @@ Iremos implementar mais adiante a primeira, <b>Swap mutation</b>, que pode ser v
 Em resumo, a mutação é uma etapa importante do algoritmo genético, pois permite a exploração de novas soluções, aumentando a diversidade genética da população. A taxa de mutação deve ser escolhida cuidadosamente, para evitar convergência prematura ou perda de características importantes da população.
 
 
-<h4>Funcionamento do algoritmo:</h4>
+<h3>O ALGORITMO:</h3>
 <ol>
 <li>Uma populacao inicial eh gerada, usualmente aleatoria, porem, caso seja conhecida alguma informacao que ajude a conhecer a solucao do problema, essa informacao pode ser usada para gerar uma populacao inicial "mais adequada" ao problema.</li>
 <li>A populacao inicial eh entao avaliada, para saber o quao boa ela eh para o problema em questao.</li>
