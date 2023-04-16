@@ -113,7 +113,7 @@ Dessa forma, quando queremos utilizar o GA para um problema em que a solucao sao
 Para os casos em que a solucao do problema sao valores reais, no momento em que formos avaliar se os Individuos da populacao sao ou nao bons candidatos, devemos converte-los de sua representacao binaria para um valor real.
 
 <div style="text-align: center;">
-<img class="centerImg" src="encoder2.png" alt="encoder2" style="width:70%;height:70px;">
+<img class="centerImg" src="encoder2.png" alt="encoder2" style="width:60%;height:60px;">
 </div>
 
 Existem algumas formas de fazer essa conversao, utilizaremos aqui a equacao abaixo, que faz uma conversao direta.
@@ -123,9 +123,13 @@ Existem algumas formas de fazer essa conversao, utilizaremos aqui a equacao abai
 </div>
 
 A principio pode parecer uma equacao complicada, mas eh na realidade bem simples. A somatoria esta apenas fazendo a conversao de binario para decimal onde l eh o numero de genes (bits) que o individuo tem, a figura abaixo expande a somatoria.
+
 <div style="text-align: center;">
 <img class="centerImg" src="convertion.png" alt="convertion" style="width:70%;height:70px;">
 </div>
+
+E o ultimo termo eh responsavel por adequar o valor da conversao para o intervalo desejado (tambe conhecido como map function)
+
 
 <hr>
 
