@@ -58,10 +58,10 @@ function googleTranslateElementInit() {
 O <b>genótipo</b> é a representação interna do <b>Indivíduo</b>, ou seja, é a sua sequência de genes que carrega informações genéticas que determinam as suas características. No algoritmo genético, o genótipo é representado por uma cadeia de bits (ou cromossomo), que codifica a informação genética do Indivíduo. 
 Como por exemplo, na sequencia de 8 bits abaixo (1 byte), cada bit representa um <b>gene</b> e os 8 bits juntos representam o <b>Individuo</b> (cromossomo):
 <div style="text-align: center;">
-<img class="centerImg" src="individual.png" alt="individual" style="width:50%;height:200px;">
+<img class="centerImg" src="individual.png" alt="individual" style="width:50%;height:220px;">
 </div>
-<br><br>
-Já o <b>fenótipo</b> é a manifestação externa das características do indivíduo, ou seja, é a sua aparência, comportamento ou outra característica observável que é resultado da interação do genótipo com o ambiente. No algoritmo genético, o fenótipo é obtido a partir do genótipo, aplicando-se uma função de decodificação que transforma a informação genética em uma solução ou resultado que pode ser avaliado.
+<br>
+Já o <b>fenótipo</b> é a manifestação externa das características do Indivíduo, ou seja, é a sua aparência, comportamento ou outra característica observável que é resultado da interação do genótipo com o ambiente. No algoritmo genético, o fenótipo é obtido a partir do genótipo, aplicando-se uma função de decodificação que transforma a informação genética em uma solução ou resultado que pode ser avaliado.
 <br><br>
 No algoritmo genético, o processo de seleção, crossover e mutação atua sobre o genótipo dos <b>Indivíduos</b>, permitindo a geração de novas soluções candidatas que serão avaliadas a partir do seu fenótipo. O objetivo do algoritmo é encontrar a solução que otimiza a função de avaliação a partir da manipulação do genótipo dos indivíduos ao longo das gerações.
 <br><br>
@@ -106,6 +106,10 @@ Existem diversas técnicas de crossover que podem ser utilizadas, dentre as quai
 <li><b>Crossover aritmético:</b> Nessa técnica, os genes dos pais são combinados de forma ponderada, gerando assim um filho que é uma média ponderada dos pais.</li>
 </ul>
 
+<div style="text-align: center;">
+<img class="centerImg" src="crossover.png" alt="individual" style="width:70%;height:300px;">
+</div>
+
 <h1>Mutacao</h1>
 O objetivo do crossover é aumentar a diversidade genética da população, permitindo a exploração de novas combinações genéticas que possam ser mais adaptadas ao ambiente em questão. É importante ressaltar que o sucesso do crossover depende tanto da escolha adequada da técnica de crossover quanto do tipo de problema a ser resolvido.
 A mutação é uma das etapas essenciais do algoritmo genético, juntamente com a seleção e o crossover. A sua função é introduzir variações aleatórias nos indivíduos da população, permitindo a exploração de novas soluções que possam ser mais adaptadas ao ambiente em questão.
@@ -116,6 +120,10 @@ O processo de mutação consiste em alterar aleatoriamente um ou mais genes de u
 <li><b>Mutação por inserção:</b> Nessa técnica, um gene é escolhido aleatoriamente e inserido em uma posição aleatória da sequência de genes.</li>
 <li><b>Mutação por deleção:</b> Nessa técnica, um gene é escolhido aleatoriamente e removido da sequência de genes.</li>
 </ul>
+
+<div style="text-align: center;">
+<img class="centerImg" src="mutation.png" alt="individual" style="width:70%;height:250px;">
+</div>
 É importante ressaltar que a taxa de mutação é um parâmetro importante do algoritmo genético, pois ela determina a frequência com que as mutações ocorrem na população. Se a taxa de mutação for muito baixa, pode ocorrer uma convergência prematura da população para um ótimo local. Por outro lado, se a taxa de mutação for muito alta, a população pode perder características importantes, comprometendo a sua adaptação ao ambiente.
 Em resumo, a mutação é uma etapa importante do algoritmo genético, pois permite a exploração de novas soluções, aumentando a diversidade genética da população. A taxa de mutação deve ser escolhida cuidadosamente, para evitar convergência prematura ou perda de características importantes da população.
 
