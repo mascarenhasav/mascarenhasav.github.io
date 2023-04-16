@@ -256,11 +256,11 @@ Criaremos agora uma funcao, chamada <b>createToolbox</b>, onde utilizaremos algu
 <div>
 <hr>
 <code>
-1:	<span style="color: green">def</span> <span style="color: blue">def</span>createToolbox</span>(parameters):
-2:		toolbox = base.Toolbox()
-3:		toolbox.register("individual", generate, parameters=parameters)
-4:		toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-5:		return toolbox
+1:	<span style="color: green">def</span> <span style="color: blue">def </span>createToolbox</span>(parameters):<br>
+2:		toolbox = base.Toolbox()<br>
+3:		toolbox.register("individual", generate, parameters=parameters)<br>
+4:		toolbox.register("population", tools.initRepeat, list, toolbox.individual)<br>
+5:		<span style="color: green">return</span> toolbox
 </code>
 <hr>
 </div>
