@@ -127,7 +127,7 @@ A principio pode parecer uma equacao complicada, mas eh na realidade bem simples
 <img class="centerImg" src="convertion.png" alt="convertion" style="width:70%;height:70px;">
 </div>
 
-E o ultimo termo eh responsavel por adequar o valor da conversao para o intervalo desejado (tambe conhecido como map function). 
+E o ultimo termo eh responsavel por adequar o valor da conversao para o intervalo desejado (tambem conhecido como map function). 
 <br>
 
 Os valores de <b>max</b> e <b>min</b> dependem do problema, por exemplo, na conversao direta de binario para decimal, 1 byte (bin: 11111111) tem o valor de 255 em decimal. Porem, se quisermos adequar esse valor para ficar entre 0 e 100, definimos <b>min=0</b> e <b>max=100</b>.
@@ -229,7 +229,8 @@ Em resumo, a mutação é uma etapa importante do algoritmo genético, pois perm
 <li>Biblioteca Matplotlib > <a href="https://matplotlib.org/stable/users/installing/index.html">[ Guia de instalacao ]</a></li>
 </ul>
 
-A ideia aqui eh criar um codigo que seja escalavel e portanto facilmente adaptado para diversos tipos de problema. Dessa forma, pode ser que a principio algumas funcoes e abordagens parecam desnecessarias, mas como voces verao o codigo final sera um codigo que poderemos reutilizar facilmente.
+A ideia aqui eh criar um codigo que seja escalavel e portanto facilmente adaptavel para diversos tipos de problema. Dessa forma, pode ser que a principio algumas funcoes e abordagens parecam desnecessarias, mas tenham em mente que o intuito eh fazermos um codigo util na pratica.
+A principio iremos escrevendo as funcoes e algumas variaveis, e nao precisem se preocupar em que ordem elas devem ficar no codigo, pois no final estara o codigo completo com uma ordem sugerida. A principal ideia agora eh entendermos a logica dos operadores e como implementa-los.
 <h1 style="color: orange">> CODING</h1>
 Vamos agora finalmente colocar a mao na massa, e programar!! :)
 <br><br>
@@ -290,8 +291,6 @@ A descricao dos parametros eh a seguinte:
 <li><b>BENCHMARK:</b> Define o benchmark que sera utilizado.</li>
 </ul>
 
-
-<br><br>
 Criaremos agora uma funcao, chamada <b>createToolbox</b>, onde utilizaremos algumas ferramentas da biblioteca Deap para gerarmos os Individuos e a Populacao.
 
 <div>
