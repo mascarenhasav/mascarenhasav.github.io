@@ -145,7 +145,7 @@ Bom, nesses casos (que sao muito comuns), uma abordagem eh simplesmente multipli
 A figura abaixo reprensenta essa divisao no Individuo. A parte matematica da conversao continua sendo exatamente a mesma, tendo apenas que levar em consideracao onde termina uma variavel e onde comeca a outra.
 
 <div style="text-align: center;">
-<img class="centerImg" src="2d.png" alt="2d" style="width:80%;height:200px;">
+<img class="centerImg" src="2d.png" alt="2d" style="width:80%;height:230px;">
 </div>
 
 <h3 style="color:green">>> CHECKPOINT <<</h3>
@@ -161,7 +161,7 @@ A seleção é uma das etapas fundamentais do algoritmo genético e tem como obj
 <li><b>Seleção por elitismo:</b> Nessa estratégia, os melhores indivíduos da população são selecionados para fazer parte da próxima geração, sem sofrer nenhum tipo de alteração. Essa técnica garante que os indivíduos mais adaptados não sejam perdidos ao longo das gerações.</li>
 </ul>
 Em resumo, a seleção é uma etapa crucial do algoritmo genético, pois é responsável por garantir que os indivíduos mais adaptados sejam mantidos e possam gerar descendentes igualmente adaptados.
-
+<hr>
 <h3>>> CROSSOVER</h3>
 O crossover, também conhecido como recombinação genética, é uma das etapas essenciais do algoritmo genético. Ele é responsável por criar novas combinações de genes a partir dos pais selecionados na etapa de seleção, criando assim uma nova geração de indivíduos.
 O processo de crossover consiste em escolher dois indivíduos (ou pais) da população selecionada na etapa anterior e misturar aleatoriamente os seus genes, criando um novo indivíduo (ou filho). Esse processo é repetido até que sejam gerados todos os indivíduos necessários para a nova geração.
@@ -179,7 +179,7 @@ Iremos implementar mais adiante a primeira, <b>Crossover de um ponto</b>, que po
 </div>
 
 O objetivo do crossover é aumentar a diversidade genética da população, permitindo a exploração de novas combinações genéticas que possam ser mais adaptadas ao ambiente em questão. É importante ressaltar que o sucesso do crossover depende tanto da escolha adequada da técnica de crossover quanto do tipo de problema a ser resolvido.
-
+<hr>
 <h3>>> MUTACAO</h3>
 A mutação é uma das etapas essenciais do algoritmo genético, juntamente com a seleção e o crossover. A sua função é introduzir variações aleatórias nos indivíduos da população, permitindo a exploração de novas soluções que possam ser mais adaptadas ao ambiente em questão.
 O processo de mutação consiste em alterar aleatoriamente um ou mais genes de um indivíduo da população. Essa alteração pode ocorrer de diversas formas, tais como:
@@ -197,7 +197,7 @@ Iremos implementar mais adiante a primeira, <b>Swap mutation</b>, que pode ser v
 É importante ressaltar que a taxa de mutação é um parâmetro importante do algoritmo genético, pois ela determina a frequência com que as mutações ocorrem na população. Se a taxa de mutação for muito baixa, pode ocorrer uma convergência prematura da população para um ótimo local. Por outro lado, se a taxa de mutação for muito alta, a população pode perder características importantes, comprometendo a sua adaptação ao ambiente.
 Em resumo, a mutação é uma etapa importante do algoritmo genético, pois permite a exploração de novas soluções, aumentando a diversidade genética da população. A taxa de mutação deve ser escolhida cuidadosamente, para evitar convergência prematura ou perda de características importantes da população.
 
-
+<hr>
 <h1 style="color: orange">> O ALGORITMO:</h1>
 <ol>
 <li>Uma populacao inicial eh gerada, usualmente aleatoria, porem, caso seja conhecida alguma informacao que ajude a conhecer a solucao do problema, essa informacao pode ser usada para gerar uma populacao inicial "mais adequada" ao problema.</li>
