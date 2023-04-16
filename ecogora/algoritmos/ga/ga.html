@@ -200,7 +200,7 @@ Iremos implementar mais adiante a primeira, <b>Swap mutation</b>, que pode ser v
 Em resumo, a mutação é uma etapa importante do algoritmo genético, pois permite a exploração de novas soluções, aumentando a diversidade genética da população. A taxa de mutação deve ser escolhida cuidadosamente, para evitar convergência prematura ou perda de características importantes da população.
 
 <hr>
-<h1 style="color: orange">> O ALGORITMO:</h1>
+<h1 style="color: orange">> O ALGORITMO</h1>
 <ol>
 <li>Uma populacao inicial eh gerada, usualmente aleatoria, porem, caso seja conhecida alguma informacao que ajude a conhecer a solucao do problema, essa informacao pode ser usada para gerar uma populacao inicial "mais adequada" ao problema.</li>
 <li>A populacao inicial eh entao avaliada, para saber o quao boa ela eh para o problema em questao.</li>
@@ -228,23 +228,25 @@ Em resumo, a mutação é uma etapa importante do algoritmo genético, pois perm
 </ul>
 
 A ideia aqui eh criar um codigo que seja escalavel e portanto facilmente adaptado para diversos tipos de problema. Dessa forma, pode ser que a principio algumas funcoes e abordagens parecam desnecessarias, mas como voces verao o codigo final sera um codigo que poderemos reutilizar facilmente.
-<h1 style="color: orange">> CODING:</h1>
-Vamos agora finalmente colocar a mao da massa, e programar!! :)
+<h1 style="color: orange">> CODING</h1>
+Vamos agora finalmente colocar a mao na massa, e programar!! :)
 <br><br>
 A primeira coisa a se fazer no codigo eh importar as bibliotecas que serao utilizadas.
 
 <pre>
 <code>
-from deap import base
-from deap import benchmarks
-from deap import creator
-from deap import tools
-from deap.benchmarks import movingpeaks
-import itertools
-import random
-import math
-import time
-import fitFunction
+<hr>
+1:		<span style="color: green">from</span> deap import base
+2:		<span style="color: green">from</span> deap import benchmarks
+3:		<span style="color: green">from</span> deap import creator
+4:		<span style="color: green">from</span> deap import tools
+5:		<span style="color: green">from</span> deap.benchmarks import movingpeaks
+6:		<span style="color: green">import</span> itertools
+7:		<span style="color: green">import</span> random
+8:		<span style="color: green">import</span> math
+9:		<span style="color: green">import</span> time
+10:		<span style="color: green">import</span> fitFunction
+<hr>
 </code>
 </pre> 
 
