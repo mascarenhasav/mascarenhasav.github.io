@@ -271,11 +271,3 @@ input[type="text"] {
 /*	margin-left: 120px;*/
 	align: center;
 }
-
-.centerImg{
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	width: 50%;
-}
