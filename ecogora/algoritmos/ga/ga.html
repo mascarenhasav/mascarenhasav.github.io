@@ -56,13 +56,26 @@ function googleTranslateElementInit() {
 <p>As principais caracteristicas dele sao:
 <ul>
 <li>Seleção: o algoritmo genético utiliza um mecanismo de seleção natural, no qual indivíduos que possuem melhores características tendem a se reproduzir mais e, consequentemente, passar essas características para as próximas gerações.</li>
-<li>Cruzamento: através da combinação de dois indivíduos, o algoritmo genético cria novos indivíduos que podem apresentar combinações genéticas diferentes, possibilitando a variação genética na população.</li>
+<li>Crossover: através da combinação de dois indivíduos, o algoritmo genético cria novos indivíduos que podem apresentar combinações genéticas diferentes, possibilitando a variação genética na população.</li>
 <li>Mutação: o algoritmo genético introduz uma pequena chance de mutação nos indivíduos filhos, o que pode levar a novas características ou melhorias nas características já existentes.</li>
 <li>Elitismo: o algoritmo genético mantém sempre os melhores indivíduos de cada geração, possibilitando a evolução constante da população.</li>
 <li>Codificação: o algoritmo genético utiliza uma codificação para representar os indivíduos, permitindo que eles possam ser processados por meio de operações matemáticas e lógicas.</li>
 <li>Avaliação Fitness: o algoritmo genético utiliza uma função de avaliação fitness para medir a qualidade de cada solução, com base nos seus objetivos e restrições.</li>
 <li>População: o algoritmo genético trabalha com uma população de indivíduos, permitindo explorar diversas soluções em paralelo e aumentando a chance de encontrar a melhor resposta.</li>
 </ul>
+
+A seguir uma explicacao mais detalhada desses operadores:
+
+<h1>Selecao</h1>
+A seleção é uma das etapas fundamentais do algoritmo genético e tem como objetivo escolher os indivíduos mais adaptados do grupo para gerar a próxima geração. Existem diferentes estratégias de seleção que podem ser utilizadas, tais como:
+<ul>
+<li>Seleção por torneio: Nessa estratégia, são escolhidos aleatoriamente alguns indivíduos da população e é selecionado o melhor entre eles para fazer parte da próxima geração. Esse processo é repetido até que sejam selecionados todos os indivíduos necessários para formar a próxima geração.</li>
+<li>Seleção por roleta: Nessa estratégia, cada indivíduo tem uma probabilidade proporcional à sua aptidão de ser selecionado para fazer parte da próxima geração. Quanto maior a aptidão do indivíduo, maior a sua probabilidade de ser escolhido.</li>
+<li>Seleção por classificação linear: Nessa estratégia, os indivíduos são ordenados de acordo com a sua aptidão e são selecionados os melhores, sendo que a probabilidade de ser escolhido diminui à medida que se avança na lista.</li>
+<li>Seleção por elitismo: Nessa estratégia, os melhores indivíduos da população são selecionados para fazer parte da próxima geração, sem sofrer nenhum tipo de alteração. Essa técnica garante que os indivíduos mais adaptados não sejam perdidos ao longo das gerações.</li>
+</ul>
+Em resumo, a seleção é uma etapa crucial do algoritmo genético, pois é responsável por garantir que os indivíduos mais adaptados sejam mantidos e possam gerar descendentes igualmente adaptados.
+
 </p>
 </div>
 
