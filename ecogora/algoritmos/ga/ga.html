@@ -257,10 +257,10 @@ Criaremos agora uma funcao, chamada <b>createToolbox</b>, onde utilizaremos algu
 <hr>
 <code>
 1:	<span style="color: green">def</span> <span style="color: blue">def </span>createToolbox</span>(parameters):<br>
-2:		toolbox = base.Toolbox()<br>
-3:		toolbox.register("individual", generate, parameters=parameters)<br>
-4:		toolbox.register("population", tools.initRepeat, list, toolbox.individual)<br>
-5:		<span style="color: green">return</span> toolbox
+2:	&emsp;toolbox = base.Toolbox()<br>
+3:	&emsp;toolbox.register("individual", generate, parameters=parameters)<br>
+4:	&emsp;toolbox.register("population", tools.initRepeat, list, toolbox.individual)<br>
+5:	&emsp;<span style="color: green">return</span> toolbox
 </code>
 <hr>
 </div>
