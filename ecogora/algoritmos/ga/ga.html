@@ -75,6 +75,7 @@ function googleTranslateElementInit() {
 <h1 style="color: orange">> DEFINICOES</h1>
 O <b>genótipo</b> é a representação interna do <b>Indivíduo</b>, ou seja, é a sua sequência de genes que carrega informações genéticas que determinam as suas características. No algoritmo genético, o genótipo é representado por uma cadeia de bits (ou cromossomo), que codifica a informação genética do Indivíduo. 
 Como por exemplo, na sequencia de 8 bits abaixo (1 byte), cada bit representa um <b>gene</b> e os 8 bits juntos representam o <b>Individuo</b> (cromossomo):
+<br>
 <div style="text-align: center;">
 <img class="centerImg" src="individual.png" alt="individual" style="width:50%;height:220px;">
 </div>
@@ -110,23 +111,23 @@ Dessa forma, quando queremos utilizar o GA para um problema em que a solucao sao
 <h1 style="color: orange">> OPERADORES</h1>
 <h3>>> ENCODER/DECODER</h3>
 Para os casos em que a solucao do problema sao valores reais, no momento em que formos avaliar se os Individuos da populacao sao ou nao bons candidatos, devemos converte-los de sua representacao binaria para um valor real.
-
+<br>
 <div style="text-align: center;">
 <img class="centerImg" src="encoder2.png" alt="encoder2" style="width:60%;height:60px;">
 </div>
-
+<br>
 Existem algumas formas de fazer essa conversao, utilizaremos aqui a equacao abaixo, que faz uma conversao direta.
-
+<br>
 <div style="text-align: center;">
 <img class="centerImg" src="encoder.png" alt="encoder" style="width:50%;height:80px;">
 </div>
-
+<br>
 A principio pode parecer uma equacao complicada, mas eh na realidade bem simples. A somatoria esta apenas fazendo a conversao de binario para decimal onde l eh o numero de genes (bits) que o individuo tem, a figura abaixo expande a somatoria.
-
+<br>
 <div style="text-align: center;">
 <img class="centerImg" src="convertion.png" alt="convertion" style="width:70%;height:70px;">
 </div>
-
+<br>
 E o ultimo termo eh responsavel por adequar o valor da conversao para o intervalo desejado (tambem conhecido como map function). 
 <br>
 
@@ -142,7 +143,7 @@ Ok, mas uma pergunta honesta que pode ser feita neste momento eh, "mas e se a so
 Bom, nesses casos (que sao muito comuns), uma abordagem eh simplesmente multiplicar o numero de genes do Individuo pelo numero de variaveis independentes do problema (numero de dimensoes do problema). No exemplo da funcao f(x, y) acima, o numero de genes seria duplicado por Individuo.
 <br>
 A figura abaixo reprensenta essa divisao no Individuo. A parte matematica da conversao continua sendo exatamente a mesma, tendo apenas que levar em consideracao onde termina uma variavel e onde comeca a outra.
-
+<br>
 <div style="text-align: center;">
 <img class="centerImg" src="2d.png" alt="2d" style="width:80%;height:230px;">
 </div>
