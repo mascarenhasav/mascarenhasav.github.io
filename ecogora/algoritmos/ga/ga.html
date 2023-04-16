@@ -8,7 +8,13 @@
 
     <script src="scramble.js"></script>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-	<script type="text/javascript" id="MathJax-script" async  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+	<script>
+		MathJax = {
+		tex: {
+		  tags: 'ams'  // should be 'ams', 'none', or 'all'
+		}
+		};
+	</script>
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <link rel="icon" href="images/luffy-smile-rb.png" />
@@ -66,7 +72,7 @@ function googleTranslateElementInit() {
 </div>
 <div id="divSynopsis"> 
 <p>Antes de mais nada, eh importante deixar claro aqui conceitos como genótipo e fenótipo, que são fundamentais no algoritmo genético.
-<h1 style="color:orange">> DEFINICOES</h1>
+<h1 style="color: green">> DEFINICOES</h1>
 O <b>genótipo</b> é a representação interna do <b>Indivíduo</b>, ou seja, é a sua sequência de genes que carrega informações genéticas que determinam as suas características. No algoritmo genético, o genótipo é representado por uma cadeia de bits (ou cromossomo), que codifica a informação genética do Indivíduo. 
 Como por exemplo, na sequencia de 8 bits abaixo (1 byte), cada bit representa um <b>gene</b> e os 8 bits juntos representam o <b>Individuo</b> (cromossomo):
 <div style="text-align: center;">
