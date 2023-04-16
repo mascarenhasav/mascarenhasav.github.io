@@ -271,3 +271,10 @@ input[type="text"] {
 /*	margin-left: 120px;*/
 	align: center;
 }
+
+.center{
+	display: block;
+	margin-left: auto;
+	margin-right; auto;
+	width: 50%;
+}
