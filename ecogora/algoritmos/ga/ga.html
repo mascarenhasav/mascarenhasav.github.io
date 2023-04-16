@@ -274,18 +274,18 @@ Antes de comecarmos a criar as funcoes dos operadores, iremos criar uma variavel
 </div>
 A descricao dos parametros eh a seguinte:
 <ul>
-<li><b>POPSIZE:</b> </li>
-<li><b>INDSIZE:</b> </li>
-<li><b>NDIM:</b> </li>
-<li><b>MIN:</b> </li>
-<li><b>MAX:</b> </li>
-<li><b>NEVALS:</b> </li>
-<li><b>RUNS:</b> </li>
-<li><b>SEL:</b> </li>
-<li><b>CROSS:</b> </li>
-<li><b>MUT:</b> </li>
-<li><b>TYPE:</b> </li>
-<li><b>BENCHMARK:</b> </li>
+<li><b>POPSIZE:</b> Numero de Individuos na populacao.</li>
+<li><b>INDSIZE:</b> Tamanho do Individuo; Numero de genes.</li>
+<li><b>NDIM:</b> Dimensao do problema; Quantidade de variaveis que um Individuo deve representar.</li>
+<li><b>MIN:</b> Valor minimo no espaco de busca do problema.</li>
+<li><b>MAX:</b> Valor maximo no espaco de busca do problema.</li>
+<li><b>NEVALS:</b> Numero total de avaliacoes que o programa deve fazer; Apos atingir esse valor a solucao do problema sera  melhor solucao encontrada ate o momento.</li>
+<li><b>RUNS:</b> Numero de runs que o programa deve rodar; Se RUNS > 1 eh feita uma media simples da melhor solucao de cada run e essa media passa a ser a solucao do problema.</li>
+<li><b>SEL:</b> Parametrizacao do operador Selecao; Ex.: No caso de Elitismo, indica a porcentagem de Individuos que devem passar direto para a proxima geracao.</li>
+<li><b>CROSS:</b> Parametrizacao do operador Crossover; Indica a probabilidade de ocorrer crossover entre um par de individuos.</li>
+<li><b>MUT:</b> Parametrizacar do operador Mutacao; Indica a probabilidade de ocorrer mutacao em um Individuo.</li>
+<li><b>TYPE:</b> Define se o problema sera do tipo binario (sem necessidade de codificacao) ou continuo (com necessidade de codificacao).</li>
+<li><b>BENCHMARK:</b> Define o benchmark que sera utilizado.</li>
 </ul>
 
 
