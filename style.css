@@ -272,8 +272,9 @@ input[type="text"] {
 	align: center;
 }
 
-.center{
+.centerImg{
 	display: block;
+	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
