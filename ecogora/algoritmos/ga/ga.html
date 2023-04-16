@@ -267,7 +267,9 @@ Criaremos agora uma funcao, chamada <b>createToolbox</b>, onde utilizaremos algu
 
 A linha 2 cria a "caixa de ferramenta", onde podemos adicionar diversas funcoes diferentes para lidarem com os individuos. No geral, esse sera um dos poucos recursos da Deap que utilizaremos, pois iremos escrever as funcoes dos operadores, para entendermos passo a passo.
 As linhas 3-4 adicionam duas funcoes a nossa toolbox. <br>
-A linha 3 adiciona a funcao que sera responsavel por criar cada Individuo da populacao. O parametro "generate", indica o nome da funcao que sera utilizada para criar os Individuos, no caso, nos mesmos iremos escrever essa funcao. E o parametro "parameters=parameters" serve apenas para passar a variavel "parameters" para a funcao "generate".
+A linha 3 adiciona a funcao que sera responsavel por criar cada Individuo da Populacao. O parametro "generate", indica o nome da funcao que sera utilizada para criar os Individuos, no caso, nos mesmos iremos escrever essa funcao. E o parametro "parameters=parameters" serve apenas para passar a variavel "parameters" para a funcao "generate".
+<br>
+A linha 4 adiciona a funcao responsavel por criar a Populacao. O parametro "list" informa que a Populacao sera do tipo <b>list</b> do python3, isto eh, cada Individuo, sera um elemento da lista. O parametro "toolbox.individual" informa qual funcao deve ser usada para criar cada Individuo, no caso, eh a funcao que acabamos de criar na linha 3. E o parametro "tools.initRepeat" informa que a funcao deve ser executada repetidamente.
 </p>
 </div>
 
