@@ -64,6 +64,11 @@ Como por exemplo, na sequencia de 8 bits abaixo (1 byte), cada bit representa um
 Já o <b>fenótipo</b> é a manifestação externa das características do Indivíduo, ou seja, é a sua aparência, comportamento ou outra característica observável que é resultado da interação do genótipo com o ambiente. No algoritmo genético, o fenótipo é obtido a partir do genótipo, aplicando-se uma função de decodificação que transforma a informação genética em uma solução ou resultado que pode ser avaliado.
 <br><br>
 No algoritmo genético, o processo de seleção, crossover e mutação atua sobre o genótipo dos <b>Indivíduos</b>, permitindo a geração de novas soluções candidatas que serão avaliadas a partir do seu fenótipo. O objetivo do algoritmo é encontrar a solução que otimiza a função de avaliação a partir da manipulação do genótipo dos indivíduos ao longo das gerações.
+<br>
+E por fim, temos a <b>Populacao</b>, que eh composta por 1 ou mais individuos.
+<h1>Checkpoint</h1>
+Conceitos que devem estar claros ate aqui: <b>Populacao</b>, <b>Individuo</b> e <b>Gene</b>.
+
 <h1>Principais caracteristicas</h1>
 <ul>
 <li><b>Seleção:</b> o algoritmo genético utiliza um mecanismo de seleção natural, no qual indivíduos que possuem melhores características tendem a se reproduzir mais e, consequentemente, passar essas características para as próximas gerações.</li>
@@ -83,7 +88,7 @@ No algoritmo genético, o processo de seleção, crossover e mutação atua sobr
 <div id="divSynopsis"> 
 <p>	
 A seguir uma explicacao mais detalhada de alguns operadores, porem, como vimos anteriormente, os individuos sao representados geralmente como sendo composto por genes binarios, isso torna a aplicacao dos operadores mais intuitiva.
-Dessa forma, quando queremos utilizar o GA para um problema em que a solucao sao numeros reais por exemplo, e nao bytes, devemos fazer a codificacao e decodificacao desses valores reais para binario.
+Dessa forma, quando queremos utilizar o GA para um problema em que a solucao sao numeros reais por exemplo, e nao bytes, devemos fazer a <b>codificacao</b> e <b>decodificacao</b> desses valores reais para binario.
 
 <h1>Selecao</h1>
 A seleção é uma das etapas fundamentais do algoritmo genético e tem como objetivo escolher os indivíduos mais adaptados do grupo para gerar a próxima geração. Existem diferentes estratégias de seleção que podem ser utilizadas, tais como:
