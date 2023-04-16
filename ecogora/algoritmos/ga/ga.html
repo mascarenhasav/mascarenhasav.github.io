@@ -132,12 +132,20 @@ E o ultimo termo eh responsavel por adequar o valor da conversao para o interval
 <br>
 
 Os valores de <b>max</b> e <b>min</b> dependem do problema, por exemplo, na conversao direta de binario para decimal, 1 byte (bin: 11111111) tem o valor de 255 em decimal. Porem, se quisermos adequar esse valor para ficar entre 0 e 100, definimos <b>min=0</b> e <b>max=100</b>.
-E portanto, nessa escala, o valor 128 em binario (bin: 00000001) sera aproximadamente 50. Nesse momento eh interessante que esse tipo de conversao esteja bem clara, se voce ainda nao estiver convencido do funcionamento desta conversao, faca alguns testes praticos com essa equacao.
+E portanto, nessa escala, o valor 128 em binario (bin: 00000001) sera aproximadamente 50. 
+<br><br>
+Nesse momento eh interessante que esse tipo de conversao esteja bem clara, se voce ainda nao estiver convencido do funcionamento desta conversao, faca alguns testes praticos com essa equacao.
 Eh importante ressaltar, que quanto maior o numero de genes por individuo (letra l na equacao), maior precisao a conversao tera.
 <br>
 Ok, mas uma pergunta honesta que pode ser feita neste momento eh, "mas e se a solucao do meu problema for mais de um valor?". Por exemplo, se o problema for uma funcao f(x, y) e voce quer encontrar x e y que minimize a funcao, e como x e y sao independentes, como faria?
 <br><br>
+Bom, nesses casos (que sao muito comuns), uma abordagem eh simplesmente multiplicar o numero de genes do Individuo pelo numero de variaveis independentes do problema (numero de dimensoes do problema). No exemplo da funcao f(x, y) acima, o numero de genes seria duplicado por Individuo.
+<br>
+A figura abaixo reprensenta essa divisao no Individuo. A parte matematica da conversao continua sendo exatamente a mesma, tendo apenas que levar em consideracao onde termina uma variavel e onde comeca a outra.
 
+<div style="text-align: center;">
+<img class="centerImg" src="2d.png" alt="2d" style="width:70%;height:70px;">
+</div>
 <hr>
 
 <h3>>> SELECAO</h3>
