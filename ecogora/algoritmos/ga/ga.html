@@ -250,6 +250,20 @@ A primeira coisa a se fazer no codigo eh importar as bibliotecas que serao utili
 </div>
 
 As linhas de 1-4 estao importando algumas funcoes que utilizaremos da biblioteca Deap. As linhas de 5-8 sao bibliotecas nativa do python que utilizaremos e por fim, na linha 9 estamos importanto o arquivo fitFunction.py que devera estar na mesma pasta do codigo principal. Mais para frente trataremos deste arquivo.
+<br><br>
+Criaremos agora uma funcao, chamada <b>createToolbox</b>, onde utilizaremos algumas ferramentas da biblioteca Deap para criarmos um 
+
+<div>
+<hr>
+<code>
+1:	<span style="color: green">def</span> <span style="color: blue">def</span>createToolbox</span>(parameters):
+2:		toolbox = base.Toolbox()
+3:		toolbox.register("individual", generate, parameters=parameters)
+4:		toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+5:		return toolbox
+</code>
+<hr>
+</div>
 
 </p>
 </div>
