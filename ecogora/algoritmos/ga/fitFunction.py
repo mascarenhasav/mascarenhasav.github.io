@@ -15,7 +15,7 @@ def function(x, parameters):
 
 
 def ecogora(x, parameters):
-	NAISU = "ECOGORA!"
+	NAISU = "MANO"
 	erro = 0
 	for i, j in zip(x, NAISU):
 		if i != j: erro += 2

@@ -38,7 +38,7 @@ day = cDate.day
 hour = cDate.hour
 minute = cDate.minute
 
-searchSpace = '''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890, .-;:_!"#%&/()=?@${[]}'''
+searchSpace = '''ABCDEFGHIJKLMNOPQRSTUVWXYZ'''
 nevals = 0
 
 
@@ -114,86 +114,42 @@ def evaluate(x, function, parameters):
 Elitism operator
 '''
 def elitism(pop, newPop, parameters):
-	pop = sorted(pop, key = lambda x:x.fitness.values[0])
-	for i in range(int(parameters["ELI"]*parameters["POPSIZE"])):
+	for i in range(parameters["ELI"]):
 		newPop.append(pop[i])
-	#for ind in newPop:
-		#print(f"[IND: {ind}][FIT: ind.fitness.values]")
 	return newPop
 
-'''
-Selection operator
-'''
-def selection(pop, newPop, parameters):
-	sumFitness = 0.0
-	relFitness = []
-	parents = []
-	for _ in range(int(parameters["SEL"]*parameters["POPSIZE"])):
-		subPop = random.sample(pop, 2)
-		subPop = sorted(subPop, key = lambda x:x.fitness.values[0])
-		newPop.append(subPop[0])
 
-	'''
-	for ind in pop:
-		sumFitness += ind.fitness.values[0]
-	for ind in pop:
-		relFitness.append(ind.fitness.values[0]/sumFitness)
-	#Generate probability intervals for each individual
-	prob = [sum(relFitness[:i+1]) for i in range(len(relFitness))]
 
-	for _ in range(2):
-		r = random.random()
-		for i, ind in enumerate(pop):
-			if(r <= prob[i]):
-				parents.append(ind)
-				parents.append(i)
-				break
-	'''
 
-	return newPop
+def condition(element):
+    return element.fitness.values[0]
+def tournament(pop, parameters):
+    l = int(len(pop)/2)
+    c = []
+    #for _ in range(int(0.1*parameters["POPSIZE"])):
+    for _ in range(3):
+        c.append(random.choice(pop[:int(parameters["CROSS"]*parameters["POPSIZE"])]))
+    #print(c)
 
+    choosed = min(c, key=condition)
+    return choosed
 
 '''
 Crossover operator
 '''
-def crossover(pop, newPop, parameters):
-	l = int(len(pop[0])/2)
-	child1 = creator.Individual([random.choice(searchSpace) for _ in range(parameters["INDSIZE"]*parameters["NDIM"])])
-	child2 = creator.Individual([random.choice(searchSpace) for _ in range(parameters["INDSIZE"]*parameters["NDIM"])])
-	'''
-	if random.random() < parameters["CROSS"]:
-		print("[CROSSOVER]")
-		#parent1, p1Id, parent2, p2Id = selection(pop, parameters)
-		print(f"[PARENT1: {parent1}]")
-		print(f"[PARENT2: {parent2}]")
-		child1[:] = parent1[0:l] + parent2[l:]
-		child2[:] = parent2[0:l] + parent1[l:]
-		print(f"[CHILD1: {child1}]")
-		print(f"[CHILD2: {child2}]")
-		pop[p1Id] = child1
-		pop[p2Id] = child2
-	return pop
-	'''
+def crossover(pop, newPop, function, parameters):
+#    for _ in range(int((1-parameters["ELI"])*parameters["POPSIZE"])):
+    for _ in range(parameters["POPSIZE"] - parameters["ELI"]):
+        parent1 = tournament(pop, parameters)
+        parent2 = tournament(pop, parameters)
+        cutPoint = random.choice(range(len(parent1)))
+        child = creator.Individual(parent1)
+        for i in range(cutPoint):
+            child[i] = parent2[i]
+        child.fitness.values = evaluate(child, function, parameters)
+        newPop.append(child)
 
-	for _ in range(int((1-parameters["ELI"]+parameters["SEL"])*parameters["POPSIZE"])):
-		parent1 = random.choice(pop)
-		parent2 = random.choice(pop)
-		if random.random() < parameters["CROSS"]:
-			#print("[CROSSOVER]")
-			#parent1, p1Id, parent2, p2Id = selection(pop, parameters)
-			#print(f"[PARENT1: {parent1}]")
-			#print(f"[PARENT2: {parent2}]")
-			child1[:] = parent1[0:l] + parent2[l:]
-			child2[:] = parent2[0:l] + parent1[l:]
-			#print(f"[CHILD1: {child1}]")
-			#print(f"[CHILD2: {child2}]")
-			newPop.append(child1)
-			#newPop.append(child2)
-		else:
-			newPop.append(parent1)
-			#newPop.append(parent2)
-
-	return newPop
+    return newPop
 
 
 
@@ -201,21 +157,23 @@ def crossover(pop, newPop, parameters):
 Mutation operator
 '''
 def mutation(pop, parameters):
-	for ind in pop:
-		if random.random() < parameters["MUT"]:
-			#print("[MUTATION]")
-			#print(f"[BEF: {ind}]")
-			bit = random.randint(0, parameters["INDSIZE"]*parameters["NDIM"]-1)
-			if(parameters["TYPE"] == "CHAR"):
-				ind[bit] = random.choice(searchSpace)
-				break
-				#print(f"[AFT: {ind}]")
-			else:
-				if ind[bit] == 1:
-					ind[bit] = 0
-				else:
-					ind[bit] = 1
-	return pop
+    #for i in range(int(parameters["ELI"]*parameters["POPSIZE"]), parameters["POPSIZE"]):
+    for i in range(parameters["ELI"], parameters["POPSIZE"]):
+        for j in range(parameters["INDSIZE"]):
+            if random.random() < parameters["MUT"]:
+                #print("[MUTATION]")
+                #print(f"[BEF: {ind}]")
+                #bit = random.randint(0, parameters["INDSIZE"]*parameters["NDIM"]-1)
+                if(parameters["TYPE"] == "CHAR"):
+                    pop[i][j] = random.choice(searchSpace)
+                    break
+                    #print(f"[AFT: {ind}]")
+                else:
+                    if pop[i][j] == 1:
+                        pop[i][j] = 0
+                    else:
+                        pop[i][j] = 1
+    return pop
 
 
 
@@ -223,130 +181,129 @@ def mutation(pop, parameters):
 Algorithm
 '''
 def ga(parameters, seed):
-	startTime = time.time()
+    startTime = time.time()
     # Create the DEAP creators
-	creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-	creator.create("Individual", list, fitness=creator.FitnessMin)
+    creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+    creator.create("Individual", list, fitness=creator.FitnessMin)
 
     # Create the toolbox functions
-	toolbox = createToolbox(parameters)
+    toolbox = createToolbox(parameters)
 
-	global nevals
+    global nevals
 
 
     # Main loop of ITER runs
-	for run in range(1, parameters["RUNS"]+1):
-		random.seed(run**5)
-		best = None
-		nevals = 0
-		gen = 0
+    for run in range(1, parameters["RUNS"]+1):
+        random.seed(run**5)
+        best = None
+        nevals = 0
+        gen = 0
 
-		# Initialize the benchmark for each run with seed being the minute
-		random.seed(a=None)
-		#fitFunction = benchmarks.h1
-		#fitFunction = benchmarks.bohachevsky
-		function = "ecogora"
+        # Initialize the benchmark for each run with seed being the minute
+        random.seed(a=None)
+        #fitFunction = benchmarks.h1
+        #fitFunction = benchmarks.bohachevsky
+        function = "ecogora"
 
-		# Create the population with POPSIZE individuals
-		pop = toolbox.population(n=parameters["POPSIZE"])
-		for ind in pop:
-			ind.fitness.values = evaluate(ind, function, parameters)
-			ind, best = updateBest(ind, best)
-		pop = sorted(pop, key = lambda x:x.fitness.values[0])
-		print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][BEST:{best}] Best:{best.fitness.values[0]:.4f}")
-		for ind in pop:
-			print(f"[IND: {ind}][FIT:{ind.fitness.values[0]}] [BEST: {best}]")
+        # Create the population with POPSIZE individuals
+        pop = toolbox.population(n=parameters["POPSIZE"])
+        for ind in pop:
+            ind.fitness.values = evaluate(ind, function, parameters)
+            ind, best = updateBest(ind, best)
+        pop = sorted(pop, key = lambda x:x.fitness.values[0])
+        print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][BEST:{best}] Best:{best.fitness.values[0]:.4f}")
+        for ind in pop:
+            print(f"[IND: {ind}][FIT:{ind.fitness.values[0]}] [BEST: {best}]")
 
-		# Repeat until reach the number of evals
-		while nevals < parameters["NEVALS"]+1:
-			newPop = []
-			#print(pop)
-			if (parameters["ELI"] > 0 and parameters["ELI"] <= 1):
-				newPop = elitism(pop, newPop, parameters)
-			if (parameters["SEL"] > 0 and parameters["SEL"] <= 1):
-				newPop = selection(pop, newPop, parameters)
-			if (parameters["CROSS"] > 0 and parameters["CROSS"] <= 1):
-				newPop = crossover(pop, newPop, parameters)
-			if (parameters["MUT"] > 0 and parameters["MUT"] <= 1):
-				newPop = mutation(pop, parameters)
+        # Repeat until reach the number of evals
+        while nevals < parameters["NEVALS"]+1 and best.fitness.values[0] != 0:
+            newPop = []
+            #print(pop)
+            if (parameters["ELI"] > 0 and parameters["ELI"] <= 1):
+                newPop = elitism(pop, newPop, parameters)
+            #if (parameters["SEL"] > 0 and parameters["SEL"] <= 1):
+                #newPop = selection(pop, newPop, parameters)
+            if (parameters["CROSS"] > 0 and parameters["CROSS"] <= 1):
+                newPop = crossover(pop, newPop, function, parameters)
+            if (parameters["MUT"] > 0 and parameters["MUT"] <= 1):
+                newPop = mutation(pop, parameters)
 
-			pop = newPop.copy()
+            pop = newPop.copy()
 
-			for ind in pop:
-				ind.fitness.values = evaluate(ind, function, parameters)
-				ind, best = updateBest(ind, best)
+            for ind in pop:
+                ind.fitness.values = evaluate(ind, function, parameters)
+                ind, best = updateBest(ind, best)
 
-			pop = sorted(pop, key = lambda x:x.fitness.values[0])
+            pop = sorted(pop, key = lambda x:x.fitness.values[0])
 
 
             # Save the log only with the bests of each generation
-			#log = [{"run": run, "gen": gen, "nevals":nevals, "best": best, "bestError": best.fitness.values[0], "Eo": Eo, "env": env}]
-			#writeLog(mode=1, filename=filename, header=header, data=log)
-			gen += 1
-			print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][BEST:{best}] Error:{best.fitness.values[0]:.4f}")
+            #log = [{"run": run, "gen": gen, "nevals":nevals, "best": best, "bestError": best.fitness.values[0], "Eo": Eo, "env": env}]
+            #writeLog(mode=1, filename=filename, header=header, data=log)
+            gen += 1
+            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][BEST:{best}] Error:{best.fitness.values[0]:.4f}")
 
-			for ind in pop:
-				print(f"[IND: {ind}][FIT:{ind.fitness.values[0]}] [BEST: {best}]")
+            #for ind in pop:
+                #print(f"[IND: {ind}][FIT:{ind.fitness.values[0]}] [BEST: {best}]")
 
 
-		if(parameters["TYPE"] == "CHAR"):
-			print(f"[END][RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}]\n[BEST:{best}]\n[Error:{best.fitness.values[0]}]")
-		else:
-			print(f"[END][RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}]\n[BEST:{best}][DECODE: {decode(best, parameters)}]\n[Error:{best.fitness.values[0]:.4f}]")
+        if(parameters["TYPE"] == "CHAR"):
+            print(f"[END][RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}]\n[BEST:{best}]\n[Error:{best.fitness.values[0]}]")
+        else:
+            print(f"[END][RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}]\n[BEST:{best}][DECODE: {decode(best, parameters)}]\n[Error:{best.fitness.values[0]:.4f}]")
 
-	executionTime = (time.time() - startTime)
+    executionTime = (time.time() - startTime)
 
-	#print(f"File generated: {path}/data.csv")
-	print(f'\nTime Exec: {str(executionTime)} s\n')
+    #print(f"File generated: {path}/data.csv")
+    print(f'\nTime Exec: {str(executionTime)} s\n')
 
 
 
 
 def main():
-	global path
-	seed = minute
-	arg_help = "{0} -s <seed> -p <path>".format(sys.argv[0])
-	path = "."
+    global path
+    seed = minute
+    arg_help = "{0} -s <seed> -p <path>".format(sys.argv[0])
+    path = "."
 
-	parameters = {
-	"POPSIZE": 100,
-	"INDSIZE": 8,
-	"NDIM": 1,
-	"MIN": -100,
-	"MAX": 100,
-	"NEVALS": 200000,
-	"RUNS": 1,
-	"ELI": 0.2,
-	"SEL": 0.2,
-	"CROSS": 1,
-	"MUT": 0.001,
-	"TYPE": "CHAR",
-	"BENCHMARK": "ECOGORA"
-	}
+    parameters = {
+    "POPSIZE": 100,
+    "INDSIZE": 4,
+    "NDIM": 1,
+    "MIN": -100,
+    "MAX": 100,
+    "NEVALS": 1000000,
+    "RUNS": 1,
+    "ELI": 20,
+    "CROSS": 0.2,
+    "MUT": 0.2,
+    "TYPE": "CHAR",
+    "BENCHMARK": "ECOGORA"
+    }
 
-	try:
-		opts, args = getopt.getopt(sys.argv[1:], "hs:p:", ["help", "seed=", "path="])
-	except:
-		print(arg_help)
-		sys.exit(2)
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "hs:p:", ["help", "seed=", "path="])
+    except:
+        print(arg_help)
+        sys.exit(2)
 
-	for opt, arg in opts:
-		if opt in ("-h", "--help"):
-			print(arg_help)  # print the help message
-			sys.exit(2)
-		elif opt in ("-s", "--seed"):
-		    seed = arg
-		elif opt in ("-p", "--path"):
-		    path = arg
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            print(arg_help)  # print the help message
+            sys.exit(2)
+        elif opt in ("-s", "--seed"):
+            seed = arg
+        elif opt in ("-p", "--path"):
+            path = arg
 
-	print(f"======================================================")
-	print(f"                   GA algorithm                       ")
-	print(f"======================================================\n")
-	print(f"[ALGORITHM SETUP]")
-	print(f"{parameters}")
-	print("\n[START]\n")
-	ga(parameters, seed)
-	print("\n[END]\nThx :)\n")
+    print(f"======================================================")
+    print(f"                   GA algorithm                       ")
+    print(f"======================================================\n")
+    print(f"[ALGORITHM SETUP]")
+    print(f"{parameters}")
+    print("\n[START]\n")
+    ga(parameters, seed)
+    print("\n[END]\nThx :)\n")
 
 
 if __name__ == "__main__":
