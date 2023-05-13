@@ -1,7 +1,6 @@
 import numpy as np
 import random
 from encoder import *
-from ga import *
 
 '''
 Mutation operator
@@ -24,9 +23,9 @@ def cp_mutation(parameters):
 
 
 def mutation(pop, parameters):
-    for i in range(int(parameters["COMP_ELI_PERC"]*parameters["POPSIZE"]), parameters["POPSIZE"]):
-        if parameters["ENCODER"]:
-            for j in range(parameters["INDSIZE"]):
+    for i in range(int(parameters["COMP_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"]), int(parameters["GA_POP_PERC"]*parameters["POPSIZE"])):
+        if parameters["GA_ENCODER"]:
+            for j in range(parameters["GA_INDSIZE"]):
                 if random.random() < parameters["COMP_MUT_PERC"]:
                     pop.ind[i] = encoder(pop.ind[i], parameters)
                     pop.ind[i]["pos"][j] = 1 - pop.ind[i]["pos"][j]

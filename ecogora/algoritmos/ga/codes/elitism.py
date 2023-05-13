@@ -1,5 +1,3 @@
-from ga import *
-
 '''
 Elitism operator
 '''
@@ -17,7 +15,7 @@ def cp_elitism(parameters):
 
 
 def elitism(pop, newPop, parameters):
-    for i in range(int(parameters["COMP_ELI_PERC"]*parameters["POPSIZE"])):
+    for i in range(int(parameters["COMP_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])):
         newPop.addInd(parameters)
         newPop.ind[i] = pop.ind[i]
     return newPop

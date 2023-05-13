@@ -1,6 +1,5 @@
 import random
 from encoder import *
-from ga import *
 
 def cp_crossover(parameters):
     if parameters["COMP_CROSS"] == 1:
@@ -20,7 +19,7 @@ def tournament(pop, parameters):
     l = int(len(pop.ind)/2)
     c = []
     for _ in range(3):
-        c.append(random.choice(pop.ind[:int(parameters["COMP_CROSS_PERC"]*parameters["POPSIZE"])]))
+        c.append(random.choice(pop.ind[:int(parameters["COMP_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
 
     choosed = min(c, key=condition)
     return choosed
@@ -29,13 +28,13 @@ def tournament(pop, parameters):
 Crossover operator
 '''
 def crossover(pop, newPop, parameters):
-    for i in range(1, int((parameters["POPSIZE"] - parameters["COMP_ELI_PERC"]*parameters["POPSIZE"])), 2):
+    for i in range(1, int((parameters["GA_POP_PERC"]*parameters["POPSIZE"] - parameters["COMP_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])), 2):
         parent1 = tournament(pop, parameters)
         parent2 = tournament(pop, parameters)
         child1 = parent1.copy()
         child2 = parent2.copy()
 
-        if parameters["ENCODER"]:
+        if parameters["GA_ENCODER"]:
             parent1 = encoder(parent1, parameters)
             parent2 = encoder(parent2, parameters)
             cutPoint = random.choice(range(len(parent1["pos"])))
@@ -50,14 +49,9 @@ def crossover(pop, newPop, parameters):
 
         newPop.addInd(parameters, i)
         newPop.ind[-1]["pos"] = child1["pos"].copy()
+        newPop.ind[-1]["type"] = "GA"
         newPop.addInd(parameters, i+1)
         newPop.ind[-1]["pos"] = child2["pos"].copy()
-
-        '''
-        print(f"p1:{parent1['pos']}")
-        print(f"p2:{parent2['pos']}")
-        print(f"c1:{child1}")
-        print(f"c2:{child2}")
-        '''
+        newPop.ind[-1]["type"] = "GA"
 
     return newPop
