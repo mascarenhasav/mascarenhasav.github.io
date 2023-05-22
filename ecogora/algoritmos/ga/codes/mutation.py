@@ -1,5 +1,5 @@
 import numpy as np
-import random
+import globalVar
 from encoder import *
 
 '''
@@ -26,12 +26,12 @@ def mutation(pop, parameters):
     for i in range(int(parameters["COMP_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"]), int(parameters["GA_POP_PERC"]*parameters["POPSIZE"])):
         if parameters["GA_ENCODER"]:
             for j in range(parameters["GA_INDSIZE"]):
-                if random.random() < parameters["COMP_MUT_PERC"]:
+                if globarVar.rng.random() < parameters["COMP_MUT_PERC"]:
                     pop.ind[i] = encoder(pop.ind[i], parameters)
                     pop.ind[i]["pos"][j] = 1 - pop.ind[i]["pos"][j]
                     pop.ind[i] = decoder(pop.ind[i], parameters)
         else:
             for d in range(parameters["NDIM"]):
-                if random.random() < parameters["COMP_MUT_PERC"]:
-                    pop.ind[i]["pos"][d] += np.random.normal(loc = 0.0, scale = parameters["COMP_MUT_STD"])
+                if globalVar.rng.random() < parameters["COMP_MUT_PERC"]:
+                    pop.ind[i]["pos"][d] += globalVar.rng.normal(loc = 0.0, scale = parameters["COMP_MUT_STD"])
     return pop

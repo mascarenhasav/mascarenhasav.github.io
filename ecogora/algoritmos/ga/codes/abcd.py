@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 '''
 Base code for GA algorithm
 
@@ -18,15 +20,16 @@ import numbers
 import json
 import shutil
 import numpy as np
-from mutation import *
-from crossover import *
-from elitism import *
-from fitFunction import *
-from aux import *
-from ga import *
-from pso import *
-from es import *
 from deap import benchmarks
+# ABCD files
+import globalVar
+import fitFunction
+import pso
+import ga
+import es
+import changeDetection
+from aux import *
+
 
 # datetime variables
 cDate = datetime.datetime.now()
@@ -36,7 +39,7 @@ day = cDate.day
 hour = cDate.hour
 minute = cDate.minute
 
-nevals = 0
+#nevals = 0
 
 
 
@@ -62,9 +65,11 @@ def evaluate(x, parameters):
     Fitness function. Returns the error between the fitness of the particle
     and the global optimum
     '''
-    global nevals
-    fitness = round(fitnessFunction(x['pos'], parameters), 3)
-    nevals += 1
+    #fitness = round(fitFunction.fitnessFunction(x['pos'], parameters), 3)
+    fitness = fitFunction.fitnessFunction(x['pos'], parameters)
+    globalVar.nevals += 1
+    if parameters["OFFLINE_ERROR"] and isinstance(globalVar.best["fit"], numbers.Number):
+        globalVar.eo_sum += globalVar.best["fit"]
     return fitness
 
 
@@ -165,11 +170,11 @@ def randInit(pop, parameters):
             else:
                 break
 
-
+    #random.seed(parameters["SEED"])
     for ind in pop.ind:
-        ind["pos"] = [float(random.choice(range(parameters['MIN_POS'], parameters['MAX_POS']))) for _ in range(parameters["NDIM"])]
+        ind["pos"] = [float(globalVar.rng.choice(range(parameters['MIN_POS'], parameters['MAX_POS']))) for _ in range(parameters["NDIM"])]
         if ind["type"] == "PSO":
-            ind["vel"] = [float(random.choice(range(parameters["MIN_VEL"], parameters["MAX_VEL"]))) for _ in range(parameters["NDIM"])]
+            ind["vel"] = [float(globalVar.rng.choice(range(parameters["MIN_VEL"], parameters["MAX_VEL"]))) for _ in range(parameters["NDIM"])]
     return pop
 
 
@@ -184,18 +189,35 @@ def errorWarning(nError=0.0, file="NONE", parameter="NONE", text="NONE"):
     sys.exit()
 
 
+
+def evaluatePop(pop, best, parameters):
+    '''
+    Reevaluate each particle attractor and update swarm best
+    If ES_CHANGE_COMP is activated, the position of particles is
+    changed by ES strategy
+    '''
+    for ind in pop.ind:
+        ind["fit"] = evaluate(ind, parameters)
+        for i, d in enumerate(ind["pos"]):
+            ind["pos"][i] = round(d, 4)
+        ind, best = updateBest(ind, best)
+
+    pop.ind = sorted(pop.ind, key = lambda x:x["fit"])
+    pop.best = pop.ind[0].copy()
+
+    return pop, best
+
+
+
+
 '''
 Algorithm
 '''
 def abcd(parameters, seed):
     startTime = time.time()
-
-    global nevals
-    bestRuns = []
-    Eo = 0
-    env = 0
     filename = f"{path}/{parameters['FILENAME']}"
 
+    bestRuns = []
 
     # Headers of the log files
     if(parameters["LOG_ALL"]):
@@ -214,15 +236,27 @@ def abcd(parameters, seed):
     for run in range(1, parameters["RUNS"]+1):
         if parameters["DEBUG_RUN_2"]:
             print(f"\n==============================================")
-            print(f"[START][RUN:{run:02}]\n[NEVALS:{nevals:06}]")
+            print(f"[START][RUN:{run:02}]\n[NEVALS:{globalVar.nevals:06}]")
             print(f"==============================================")
 
-        random.seed(seed*run**5)
-        nevals = 0
+        seed = seed*run**5
+        parameters["SEED"] = seed
+
+        globalVar.rng = np.random.default_rng(seed)
+        globalVar.nevals = 0
+        globalVar.mpb = None
+        globalVar.best = None
+        globalVar.eo_sum = 0
+
         gen = 1
+        genChangeEnv = 0
+        env = 0
+        flagEnv = 0
+        Eo = 0
+        change = 0
 
         # Create the population with POPSIZE individuals
-        pops, best = createPopulation(parameters)
+        pops, globalVar.best = createPopulation(parameters)
 
 
         #####################################
@@ -230,25 +264,22 @@ def abcd(parameters, seed):
         #####################################
         for pop in pops:
             pop = randInit(pop, parameters)
-            for ind in pop.ind:
-                ind["fit"] = evaluate(ind, parameters)
-                ind, best = updateBest(ind, best)
 
-            pop.ind = sorted(pop.ind, key = lambda x:x["fit"])
-            pop.best = pop.ind[0].copy()
+            # Evaluate all the individuals in the pop and update the bests
+            pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
 
             # Debug in individual level
             if parameters["DEBUG_IND"] or parameters["LOG_ALL"]:
                 for ind in pop.ind:
                     if parameters["LOG_ALL"]:
-                        log = [{"run": run, "gen": gen, "nevals":nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": best["id"], "bestPos": best["pos"], "bestError": best["fit"], "Eo": Eo, "env": env}]
+                        log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globaVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
                         writeLog(mode=1, filename=filename, header=header, data=log)
                     if parameters["DEBUG_IND"]:
-                        print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']} ERROR:{ind['fit']}]\t[BEST {best['id']:04}: {best['pos']} ERROR:{best['fit']}]")
+                        print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']} ERROR:{ind['fit']}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
 
 
         if not parameters["LOG_ALL"]:
-            log = [{"run": run, "gen": gen, "nevals":nevals, "bestId": best["id"], "bestPos": best["pos"], "bestError": best["fit"], "Eo": Eo, "env": env}]
+            log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "bestId": globalVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
             writeLog(mode=1, filename=filename, header=header, data=log)
 
 
@@ -257,54 +288,78 @@ def abcd(parameters, seed):
         #####################################
         if parameters["DEBUG_POP"]:
             for pop in pops:
-                print(f"[POP {pop.id:04}][BEST {pop.best['id']:04}: {pop.best['pos']} ERROR:{best['fit']}]")
+                print(f"[POP {pop.id:04}][BEST {pop.best['id']:04}: {pop.best['pos']} ERROR:{globalVar.best['fit']}]")
 
         if parameters["DEBUG_GEN"]:
-            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][POP {best['pop_id']:04}][BEST {best['id']:04}:{best['pos']} ERROR:{best['fit']}]")
+            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
 
 
         ###########################################################################
         # LOOP UNTIL FINISH THE RUN
         ###########################################################################
 
-        while nevals < (parameters["NEVALS"]-parameters["POPSIZE"])+1 and best["fit"] != 42:
+        while globalVar.nevals < (parameters["NEVALS"]-parameters["POPSIZE"])+1 and globalVar.best["fit"] != 42:
             for pop in pops:
+
+                # Change detection component in the environment
+
+                if(parameters["COMP_CHANGE_DETECT"] == 1):
+                    if not change:
+                        change = changeDetection.detection(pop, parameters)
+                    if change:
+                        print(f"[NEVALS: {globalVar.nevals}]")
+                        globalVar.best["fit"] = "NaN"
+                        pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
+                        if flagEnv == 0:
+                            env += 1
+                            genChangeEnv = gen
+                            flagEnv = 1
+                elif(parameters["COMP_CHANGE_DETECT"] != 0):
+                    errorWarning(0.1, "algoConfig.ini", "COMP_CHANGE_DETECT", "Component Change Detection should be 0 or 1")
+
+
                 #####################################
-                # Apply the components in the pops
+                # Apply the optimizers in the pops
                 #####################################
 
-                pop = ga(pop, parameters)
+                if parameters["GA_POP_PERC"]:
+                    pop = ga.ga(pop, parameters)
 
                 for ind in pop.ind:
                     if ind["type"] == "PSO":
-                        ind = pso(ind, best, parameters)
+                        ind = pso.pso(ind, globalVar.best, parameters)
                     elif ind["type"] == "ES":
-                        ind = es(ind, pop.best, parameters)
+                        ind = es.es(ind, pop.best, parameters)
 
-                #newPop = pso(pop, newPop, parameters)
+
+                #####################################
+                # Apply the optimizers in the pops
+                #####################################
 
                 '''
                     The next componentes should be here
                 '''
 
-                # Evaluate all the individuals in the pop and update the global best
-                for ind in pop.ind:
-                    ind["fit"] = evaluate(ind, parameters)
-                    for i, d in enumerate(ind["pos"]):
-                        ind["pos"][i] = round(d, 4)
-                    ind, best = updateBest(ind, best)
 
-                pop.ind = sorted(pop.ind, key = lambda x:x["fit"])
-                pop.best = pop.ind[0].copy()
+                # Evaluate all the individuals in the pop and update the bests
+                pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
+
+
 
                 # Debug in individual level
                 if parameters["DEBUG_IND"] or parameters["LOG_ALL"]:
                     for ind in pop.ind:
                         if parameters["LOG_ALL"]:
-                            log = [{"run": run, "gen": gen, "nevals":nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": best["id"], "bestPos": best["pos"], "bestError": best["fit"], "Eo": Eo, "env": env}]
+                            log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globalVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
                             writeLog(mode=1, filename=filename, header=header, data=log)
                         if parameters["DEBUG_IND"]:
-                            print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']} ERROR:{ind['fit']}]\t[BEST {best['id']:04}: {best['pos']} ERROR:{best['fit']}]")
+                            print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']} ERROR:{ind['fit']}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
+
+
+            change = 0
+            if abs(gen - genChangeEnv) > 2:
+                flagEnv = 0
+                change = 0
 
             gen += 1
 
@@ -313,7 +368,8 @@ def abcd(parameters, seed):
             #####################################
 
             if not parameters["LOG_ALL"]:
-                log = [{"run": run, "gen": gen, "nevals":nevals, "bestId": best["id"], "bestPos": best["pos"], "bestError": best["fit"], "Eo": Eo, "env": env}]
+                Eo = globalVar.eo_sum/globalVar.nevals
+                log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "bestId": globalVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
                 writeLog(mode=1, filename=filename, header=header, data=log)
 
 
@@ -326,23 +382,23 @@ def abcd(parameters, seed):
                     print(f"[POP {pop.id:04}][BEST {pop.best['id']:04}: {pop.best['pos']} ERROR:{pop.best['fit']}]")
 
             if parameters["DEBUG_GEN"]:
-                print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][POP {best['pop_id']:04}][BEST {best['id']:04}:{best['pos']}] ERROR:{best['fit']}")
+                print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']}][Eo: {Eo}]")
 
 
         #####################################
         # End of the run
         #####################################
 
-        bestRuns.append(best)
+        bestRuns.append(globalVar.best)
 
         if parameters["DEBUG_RUN"]:
-            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{nevals:06}][POP {best['pop_id']:04}][BEST {best['id']:04}:{best['pos']} ERROR:{best['fit']}]")
+            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
         if parameters["DEBUG_RUN_2"]:
             print(f"\n==============================================")
-            print(f"[RUN:{run:02}]\n[GEN:{gen:04}][NEVALS:{nevals:06}]")
-            print(f"[BEST: IND {best['id']:04} from POP {best['pop_id']:04}")
-            print(f"    -[POS: {best['pos']}]")
-            print(f"    -[Error: {best['fit']}]")
+            print(f"[RUN:{run:02}]\n[GEN:{gen:04}][NEVALS:{globalVar.nevals:06}]")
+            print(f"[BEST: IND {globalVar.best['id']:04} from POP {globalVar.best['pop_id']:04}")
+            print(f"    -[POS: {globalVar.best['pos']}]")
+            print(f"    -[Error: {globalVar.best['fit']}]")
             print(f"==============================================")
 
 
@@ -407,6 +463,9 @@ def main():
 
     parameters = parameters0 | parameters1 | parameters2
 
+    if parameters["SEED"] >= 0:
+        seed = parameters["SEED"]
+
     if path == ".":
         path = f"{parameters['PATH']}/{parameters['ALGORITHM']}"
         path = checkDirs(path)
@@ -447,9 +506,6 @@ def main():
         if(parameters["LOCAL_SEARCH_COMP"]):
             print(f"-- [LOCAL_SEARCH]: Rls={parameters['RLS']}")
 
-        #print(benchmarks.schwefel([420, 420]))
-        #print(benchmarks.schwefel([-2.0, 2.0]))
-        #e()
 
         print()
         print(f"[BENCHMARK SETUP]")

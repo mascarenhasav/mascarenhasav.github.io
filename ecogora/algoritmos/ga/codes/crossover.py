@@ -1,4 +1,4 @@
-import random
+import globalVar
 from encoder import *
 
 def cp_crossover(parameters):
@@ -19,7 +19,7 @@ def tournament(pop, parameters):
     l = int(len(pop.ind)/2)
     c = []
     for _ in range(3):
-        c.append(random.choice(pop.ind[:int(parameters["COMP_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
+        c.append(globalVar.rng.choice(pop.ind[:int(parameters["COMP_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
 
     choosed = min(c, key=condition)
     return choosed
@@ -37,13 +37,13 @@ def crossover(pop, newPop, parameters):
         if parameters["GA_ENCODER"]:
             parent1 = encoder(parent1, parameters)
             parent2 = encoder(parent2, parameters)
-            cutPoint = random.choice(range(len(parent1["pos"])))
+            cutPoint = globalVar.rng.choice(range(len(parent1["pos"])))
             child1["pos"], child2["pos"]  = parent1["pos"][:cutPoint] + parent2["pos"][cutPoint:], \
                                             parent2["pos"][:cutPoint] + parent1["pos"][cutPoint:]
             child1 = decoder(child1, parameters)
             child2 = decoder(child2, parameters)
         else:
-            cutPoint = random.choice(range(1, parameters["NDIM"]))
+            cutPoint = globalVar.rng.choice(range(1, parameters["NDIM"]))
             child1["pos"], child2["pos"]  = parent1["pos"][:cutPoint] + parent2["pos"][cutPoint:], \
                                             parent2["pos"][:cutPoint] + parent1["pos"][cutPoint:]
 
