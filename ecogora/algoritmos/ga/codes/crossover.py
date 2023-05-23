@@ -1,15 +1,13 @@
 import globalVar
+import sys
 from encoder import *
 
 def cp_crossover(parameters):
-    if parameters["COMP_CROSS"] == 1:
-        if 0 < parameters["COMP_CROSS_PERC"] < 1:
-            return 1
-        else:
-            errorWarning(2.2, "algoConfig.ini", "COMP_CROSS_PERC", "The percentage parameter of the Elitism component Elitism should be in the interval ]0, 1[")
-            return 0
-    elif parameters["COMP_CROSS"] != 0:
-        errorWarning(2.1, "algoConfig.ini", "COMP_CROSS", "Component Elitism should be 0 or 1")
+    if 0 < parameters["GA_CROSS_PERC"] < 1:
+        return 1
+    else:
+        errorWarning(2.2, "algoConfig.ini", "GA_CROSS_PERC", "The percentage parameter of the Elitism component Elitism should be in the interval ]0, 1[")
+        sys.exit()
         return 0
 
 
@@ -19,7 +17,7 @@ def tournament(pop, parameters):
     l = int(len(pop.ind)/2)
     c = []
     for _ in range(3):
-        c.append(globalVar.rng.choice(pop.ind[:int(parameters["COMP_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
+        c.append(globalVar.rng.choice(pop.ind[:int(parameters["GA_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
 
     choosed = min(c, key=condition)
     return choosed
@@ -28,7 +26,7 @@ def tournament(pop, parameters):
 Crossover operator
 '''
 def crossover(pop, newPop, parameters):
-    for i in range(1, int((parameters["GA_POP_PERC"]*parameters["POPSIZE"] - parameters["COMP_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])), 2):
+    for i in range(1, int((parameters["GA_POP_PERC"]*parameters["POPSIZE"] - parameters["GA_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])), 2):
         parent1 = tournament(pop, parameters)
         parent2 = tournament(pop, parameters)
         child1 = parent1.copy()

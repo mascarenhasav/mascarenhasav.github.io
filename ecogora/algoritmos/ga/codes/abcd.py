@@ -25,8 +25,10 @@ from deap import benchmarks
 import globalVar
 import fitFunction
 import pso
+import de
 import ga
 import es
+import mutation
 import changeDetection
 from aux import *
 
@@ -121,6 +123,7 @@ class population():
         population.newid = itertools.count(1).__next__    # Get a new id for the population
 
 
+
 def createPopulation(parameters):
     '''
         This function is to create the populations and individuals
@@ -147,6 +150,14 @@ def randInit(pop, parameters):
 
     flag = 0
 
+    if ((parameters["GA_POP_PERC"]   \
+         +parameters["PSO_POP_PERC"] \
+         +parameters["DE_POP_PERC"]  \
+         +parameters["ES_POP_PERC"]) \
+         != 1):
+        errorWarning(0.0, "algoConfig.ini", "XXX_POP_PERC", "The sum of the percentage of the population to perform the optimizers should be in 1")
+        sys.exit()
+
     if 0 < parameters["GA_POP_PERC"] <= 1:
         for ind in pop.ind:
             if ind["id"] <= int(parameters["GA_POP_PERC"]*parameters["POPSIZE"]):
@@ -154,6 +165,9 @@ def randInit(pop, parameters):
             else:
                 flag = ind["id"]-1
                 break
+    elif parameters["GA_POP_PERC"] != 0:
+        errorWarning(0.2, "algoConfig.ini", "GA_POP_PERC", "Percentage of the population to perform GA should be in [0, 1]")
+        sys.exit()
 
     if 0 < parameters["PSO_POP_PERC"] <= 1:
         for i in range(flag, len(pop.ind)):
@@ -162,6 +176,20 @@ def randInit(pop, parameters):
             else:
                 flag = pop.ind[i]["id"]-1
                 break
+    elif parameters["PSO_POP_PERC"] != 0:
+        errorWarning(0.3, "algoConfig.ini", "PSO_POP_PERC", "Percentage of the population to perform PSO should be in [0, 1]")
+        sys.exit()
+
+    if 0 < parameters["DE_POP_PERC"] <= 1:
+        for i in range(flag, len(pop.ind)):
+            if pop.ind[i]["id"] <= int(parameters["DE_POP_PERC"]*parameters["POPSIZE"]+flag):
+                pop.ind[i]["type"] = "DE"
+            else:
+                flag = pop.ind[i]["id"]-1
+                break
+    elif parameters["DE_POP_PERC"] != 0:
+        errorWarning(0.4, "algoConfig.ini", "DE_POP_PERC", "Percentage of the population to perform DE should be in [0, 1]")
+        sys.exit()
 
     if 0 < parameters["ES_POP_PERC"] <= 1:
         for i in range(flag, len(pop.ind)):
@@ -169,12 +197,16 @@ def randInit(pop, parameters):
                 pop.ind[i]["type"] = "ES"
             else:
                 break
+    elif parameters["ES_POP_PERC"] != 0:
+        errorWarning(0.5, "algoConfig.ini", "ES_POP_PERC", "Percentage of the population to perform ES should be in [0, 1]")
+        sys.exit()
+
 
     #random.seed(parameters["SEED"])
     for ind in pop.ind:
         ind["pos"] = [float(globalVar.rng.choice(range(parameters['MIN_POS'], parameters['MAX_POS']))) for _ in range(parameters["NDIM"])]
         if ind["type"] == "PSO":
-            ind["vel"] = [float(globalVar.rng.choice(range(parameters["MIN_VEL"], parameters["MAX_VEL"]))) for _ in range(parameters["NDIM"])]
+            ind["vel"] = [float(globalVar.rng.choice(range(parameters["PSO_MIN_VEL"], parameters["PSO_MAX_VEL"]))) for _ in range(parameters["NDIM"])]
     return pop
 
 
@@ -275,7 +307,7 @@ def abcd(parameters, seed):
                         log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globaVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
                         writeLog(mode=1, filename=filename, header=header, data=log)
                     if parameters["DEBUG_IND"]:
-                        print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']} ERROR:{ind['fit']}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
+                        print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
 
 
         if not parameters["LOG_ALL"]:
@@ -291,7 +323,7 @@ def abcd(parameters, seed):
                 print(f"[POP {pop.id:04}][BEST {pop.best['id']:04}: {pop.best['pos']} ERROR:{globalVar.best['fit']}]")
 
         if parameters["DEBUG_GEN"]:
-            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
+            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']}][Eo: {Eo}]")
 
 
         ###########################################################################
@@ -325,6 +357,9 @@ def abcd(parameters, seed):
                 if parameters["GA_POP_PERC"]:
                     pop = ga.ga(pop, parameters)
 
+                if parameters["DE_POP_PERC"]:
+                    pop = de.de(pop, parameters)
+
                 for ind in pop.ind:
                     if ind["type"] == "PSO":
                         ind = pso.pso(ind, globalVar.best, parameters)
@@ -336,6 +371,10 @@ def abcd(parameters, seed):
                 # Apply the optimizers in the pops
                 #####################################
 
+                if mutation.cp_mutation(parameters, comp=1):
+                    pop = mutation.mutation(pop, parameters, comp=1)
+
+
                 '''
                     The next componentes should be here
                 '''
@@ -345,7 +384,6 @@ def abcd(parameters, seed):
                 pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
 
 
-
                 # Debug in individual level
                 if parameters["DEBUG_IND"] or parameters["LOG_ALL"]:
                     for ind in pop.ind:
@@ -353,8 +391,7 @@ def abcd(parameters, seed):
                             log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globalVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
                             writeLog(mode=1, filename=filename, header=header, data=log)
                         if parameters["DEBUG_IND"]:
-                            print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']} ERROR:{ind['fit']}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
-
+                            print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
 
             change = 0
             if abs(gen - genChangeEnv) > 2:
@@ -481,7 +518,7 @@ def main():
             print(arg_help)  # print the help message
             sys.exit(2)
         elif opt in ("-s", "--seed"):
-            seed = arg
+            seed = int(arg)
         elif opt in ("-p", "--path"):
             path = arg
 
@@ -512,6 +549,7 @@ def main():
         print(f"- Name: {parameters['BENCHMARK']}")
         print(f"- NDIM: {parameters['NDIM']}")
 
+    time.sleep(2)
     print("\n[START]\n")
     abcd(parameters, seed)
     print("\n[END]\nThx :)\n")

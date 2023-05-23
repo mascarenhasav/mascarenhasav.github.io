@@ -28,8 +28,8 @@ hour = cDate.hour
 minute = cDate.minute
 
 colors = ["#afafaf", "#820e57", "orange", "red", "green", "blue", "yellow"]
-lineStyles = ["dashdot", "dotted", "dashed", ":", "solid",  "solid"]
-markers = [".", "x", "^", "^"]
+lineStyles = ["dashdot", "dotted", "dashed", ":", "solid",  "solid", "solid"]
+markers = [".", "x", "^", "^", "."]
 
 def configPlot(parameters):
     THEME = parameters["THEME"]
