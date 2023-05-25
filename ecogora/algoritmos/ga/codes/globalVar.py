@@ -8,6 +8,7 @@ eo_sum = 0
 mpb = None
 rng = None
 best = None
+alreadyEvaluated = []
 
 
 

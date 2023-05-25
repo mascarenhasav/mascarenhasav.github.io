@@ -14,10 +14,10 @@ def cp_crossover(parameters):
 def condition(individual):
     return individual["fit"]
 def tournament(pop, parameters):
-    l = int(len(pop.ind)/2)
+    l = int(len(pop)/2)
     c = []
     for _ in range(3):
-        c.append(globalVar.rng.choice(pop.ind[:int(parameters["GA_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
+        c.append(globalVar.rng.choice(pop[:int(parameters["GA_CROSS_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])]))
 
     choosed = min(c, key=condition)
     return choosed
@@ -26,7 +26,7 @@ def tournament(pop, parameters):
 Crossover operator
 '''
 def crossover(pop, newPop, parameters):
-    for i in range(1, int((parameters["GA_POP_PERC"]*parameters["POPSIZE"] - parameters["GA_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])), 2):
+    for i in range(1, int((parameters["GA_POP_PERC"]*parameters["POPSIZE"] - parameters["GA_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])+1), 2):
         parent1 = tournament(pop, parameters)
         parent2 = tournament(pop, parameters)
         child1 = parent1.copy()

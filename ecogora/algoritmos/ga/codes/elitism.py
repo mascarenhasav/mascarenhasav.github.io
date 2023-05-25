@@ -16,6 +16,7 @@ def cp_elitism(parameters):
 def elitism(pop, newPop, parameters):
     for i in range(int(parameters["GA_ELI_PERC"]*parameters["GA_POP_PERC"]*parameters["POPSIZE"])):
         newPop.addInd(parameters)
-        newPop.ind[i] = pop.ind[i]
+        newPop.ind[i] = pop[i]
+        newPop.ind[i]["ae"] = 1
 
     return newPop

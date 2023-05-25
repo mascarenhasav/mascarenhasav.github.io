@@ -11,6 +11,7 @@ def de(pop, parameters):
 
     dePop = [d for d in tempPop.ind if d["type"]=="DE"] # Select only the DE individuals
 
+
     for ind in dePop:
         x = []
         candidates = [c for c in dePop if c["id"] != ind["id"]]
@@ -27,13 +28,15 @@ def de(pop, parameters):
             if globalVar.rng.random() < parameters["DE_CR"]:
                 ind["pos"][d] = x[d]
 
-    index = [d["id"] for d in dePop]
-    for id, ind in zip(index, dePop):
-        ind["fit"] = abcd.evaluate(ind, parameters)
+    for ind in dePop:
+        ind = abcd.evaluate(ind, parameters)
         for i in range(len(pop.ind)):
-            if ind["id"] == pop.ind[i]["id"] and ind["fit"] < pop.ind[i]["fit"]:
-                    pop.ind[i] = ind
-                    abcd.updateBest(pop.ind[i], globalVar.best)
+            if ind["id"] == pop.ind[i]["id"]:
+                    if ind["fit"] < pop.ind[i]["fit"]:
+                        pop.ind[i] = ind.copy()
+                        ind, globalVar.best = abcd.updateBest(pop.ind[i], globalVar.best)
+                    else:
+                            pop.ind[i]["ae"] = 1    # Assure that this individual will not be evaluated again
 
     return pop
 

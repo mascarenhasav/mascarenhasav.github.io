@@ -68,11 +68,12 @@ def evaluate(x, parameters):
     and the global optimum
     '''
     #fitness = round(fitFunction.fitnessFunction(x['pos'], parameters), 3)
-    fitness = fitFunction.fitnessFunction(x['pos'], parameters)
+    x["fit"] = fitFunction.fitnessFunction(x['pos'], parameters)
     globalVar.nevals += 1
     if parameters["OFFLINE_ERROR"] and isinstance(globalVar.best["fit"], numbers.Number):
         globalVar.eo_sum += globalVar.best["fit"]
-    return fitness
+    x["ae"] = 1
+    return x
 
 
 
@@ -105,7 +106,8 @@ class population():
                 "vel": [0 for _ in range(parameters["NDIM"])], \
                 "best_pos": [0 for _ in range(parameters["NDIM"])], \
                 "best_fit": "NaN", \
-                "fit": "NaN" \
+                "fit": "NaN", \
+                "ae": 0 \
                 }
         return attr
 
@@ -149,12 +151,13 @@ def randInit(pop, parameters):
     '''
 
     flag = 0
+    perc_pop = parameters["GA_POP_PERC"]   \
+               +parameters["PSO_POP_PERC"] \
+               +parameters["DE_POP_PERC"]  \
+               +parameters["ES_POP_PERC"]
+    print(perc_pop)
 
-    if ((parameters["GA_POP_PERC"]   \
-         +parameters["PSO_POP_PERC"] \
-         +parameters["DE_POP_PERC"]  \
-         +parameters["ES_POP_PERC"]) \
-         != 1):
+    if (abs(perc_pop-1) > 0.001):
         errorWarning(0.0, "algoConfig.ini", "XXX_POP_PERC", "The sum of the percentage of the population to perform the optimizers should be in 1")
         sys.exit()
 
@@ -229,10 +232,13 @@ def evaluatePop(pop, best, parameters):
     changed by ES strategy
     '''
     for ind in pop.ind:
-        ind["fit"] = evaluate(ind, parameters)
-        for i, d in enumerate(ind["pos"]):
-            ind["pos"][i] = round(d, 4)
-        ind, best = updateBest(ind, best)
+        if ind["ae"] == 0:
+            ind = evaluate(ind, parameters)
+            '''
+            for i, d in enumerate(ind["pos"]):
+                ind["pos"][i] = round(d, 4)
+            '''
+            ind, best = updateBest(ind, best)
 
     pop.ind = sorted(pop.ind, key = lambda x:x["fit"])
     pop.best = pop.ind[0].copy()
@@ -290,7 +296,6 @@ def abcd(parameters, seed):
         # Create the population with POPSIZE individuals
         pops, globalVar.best = createPopulation(parameters)
 
-
         #####################################
         # For each pop in pops do the job
         #####################################
@@ -299,15 +304,14 @@ def abcd(parameters, seed):
 
             # Evaluate all the individuals in the pop and update the bests
             pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
-
-            # Debug in individual level
-            if parameters["DEBUG_IND"] or parameters["LOG_ALL"]:
-                for ind in pop.ind:
-                    if parameters["LOG_ALL"]:
-                        log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globaVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
-                        writeLog(mode=1, filename=filename, header=header, data=log)
-                    if parameters["DEBUG_IND"]:
-                        print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
+            for ind in pop.ind:
+                ind["ae"] = 0
+                # Debug in individual level
+                if parameters["LOG_ALL"]:
+                    log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globaVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
+                    writeLog(mode=1, filename=filename, header=header, data=log)
+                if parameters["DEBUG_IND"]:
+                    print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
 
 
         if not parameters["LOG_ALL"]:
@@ -323,7 +327,7 @@ def abcd(parameters, seed):
                 print(f"[POP {pop.id:04}][BEST {pop.best['id']:04}: {pop.best['pos']} ERROR:{globalVar.best['fit']}]")
 
         if parameters["DEBUG_GEN"]:
-            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']}][Eo: {Eo}]")
+            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']:.04f}][Eo: {Eo:.04f}]")
 
 
         ###########################################################################
@@ -354,17 +358,21 @@ def abcd(parameters, seed):
                 # Apply the optimizers in the pops
                 #####################################
 
+
+
                 if parameters["GA_POP_PERC"]:
                     pop = ga.ga(pop, parameters)
+
 
                 if parameters["DE_POP_PERC"]:
                     pop = de.de(pop, parameters)
 
-                for ind in pop.ind:
-                    if ind["type"] == "PSO":
-                        ind = pso.pso(ind, globalVar.best, parameters)
-                    elif ind["type"] == "ES":
-                        ind = es.es(ind, pop.best, parameters)
+                for i in range(len(pop.ind)):
+                    if pop.ind[i]["type"] == "PSO":
+                        pop.ind[i] = pso.pso(pop.ind[i], globalVar.best, parameters)
+                    elif pop.ind[i]["type"] == "ES":
+                        pop.ind[i] = es.es(pop.ind[i], pop.best, parameters)
+                        #print(ind)
 
 
                 #####################################
@@ -384,14 +392,15 @@ def abcd(parameters, seed):
                 pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
 
 
-                # Debug in individual level
-                if parameters["DEBUG_IND"] or parameters["LOG_ALL"]:
-                    for ind in pop.ind:
-                        if parameters["LOG_ALL"]:
-                            log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globalVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
-                            writeLog(mode=1, filename=filename, header=header, data=log)
-                        if parameters["DEBUG_IND"]:
-                            print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
+                for ind in pop.ind:
+                    ind["ae"] = 0 # Allow new evaluation
+                    # Debug in individual level
+                    if parameters["LOG_ALL"]:
+                        log = [{"run": run, "gen": gen, "nevals":globalVar.nevals, "popId": pop.id, "indId": ind["id"], "indPos": ind["pos"], "indError": ind["fit"], "popBestId": pop.best["id"], "popBestPos": pop.best["pos"], "popBestError": pop.best["fit"], "bestId": globalVar.best["id"], "bestPos": globalVar.best["pos"], "bestError": globalVar.best["fit"], "Eo": Eo, "env": env}]
+                        writeLog(mode=1, filename=filename, header=header, data=log)
+                    if parameters["DEBUG_IND"]:
+                        print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
+
 
             change = 0
             if abs(gen - genChangeEnv) > 2:
@@ -419,7 +428,7 @@ def abcd(parameters, seed):
                     print(f"[POP {pop.id:04}][BEST {pop.best['id']:04}: {pop.best['pos']} ERROR:{pop.best['fit']}]")
 
             if parameters["DEBUG_GEN"]:
-                print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']}][Eo: {Eo}]")
+                print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']:.04f}][Eo: {Eo:.04f}]")
 
 
         #####################################
@@ -456,7 +465,7 @@ def abcd(parameters, seed):
 
     #print(f"File generated: {path}/data.csv")
     if(parameters["DEBUG_RUN"]):
-        print(f"File generated: {path}/data.csv")
+        print(f"\nFile generated: {path}/data.csv")
         print(f'Time Exec: {str(executionTime)} s\n')
 
 
@@ -530,11 +539,22 @@ def main():
         print(f"- Name: {parameters['ALGORITHM']}")
         print(f"- Population (percentage of total individuals):")
         print(f"-- GA:\t{parameters['GA_POP_PERC']*100}%")
+        if(parameters["GA_POP_PERC"] > 0):
+            print(f"--- [GA] Elitism:  \t{parameters['GA_ELI_PERC']*100:.0f}%")
+            print(f"--- [GA] Crossover:\t{parameters['GA_CROSS_PERC']*100}%")
+            print(f"--- [GA] Mutation: \t{parameters['GA_MUT_PERC']}")
         print(f"-- PSO:\t{parameters['PSO_POP_PERC']*100}%")
+        if(parameters["PSO_POP_PERC"] > 0):
+            print(f"--- [PSO] Phi1:\t\t{parameters['PSO_PHI1']}")
+            print(f"--- [PSO] Phi2:\t\t{parameters['PSO_PHI2']}")
+            print(f"--- [PSO] W:\t\t{parameters['PSO_W']}")
+        print(f"-- DE:\t{parameters['DE_POP_PERC']*100}%")
+        if(parameters["DE_POP_PERC"] > 0):
+            print(f"--- [DE] F:\t\t{parameters['DE_F']}")
+            print(f"--- [DE] CR:\t\t{parameters['DE_CR']}")
         print(f"-- ES:\t{parameters['ES_POP_PERC']*100}%")
         if(parameters["ES_POP_PERC"] > 0):
-            print(f"--- [ES]: Rcloud={parameters['ES_RCLOUD']}")
-        print(f"-- DE:\t{parameters['DE_POP_PERC']*100}%")
+            print(f"--- [ES] Rcloud:\t{parameters['ES_RCLOUD']}")
         print(f"- Components used:")
         if(parameters["EXCLUSION_COMP"]):
             print(f"-- [Exlcusion]: Rexcl={parameters['REXCL']}")
@@ -549,7 +569,12 @@ def main():
         print(f"- Name: {parameters['BENCHMARK']}")
         print(f"- NDIM: {parameters['NDIM']}")
 
-    time.sleep(2)
+    time.sleep(1)
+    try:
+        input("\n\n[Press enter to start...]")
+    except SyntaxError:
+        pass
+
     print("\n[START]\n")
     abcd(parameters, seed)
     print("\n[END]\nThx :)\n")

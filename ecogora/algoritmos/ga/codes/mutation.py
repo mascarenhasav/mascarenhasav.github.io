@@ -48,7 +48,7 @@ def mutation(pop, parameters, comp=0):
         mutation_std = parameters["COMP_MUT_STD"]
         population_perc = 1
 
-    for i in range(int(elitism_factor*population_perc*parameters["POPSIZE"]), int(population_perc*parameters["POPSIZE"])):
+    for i in range(int(elitism_factor*population_perc*parameters["POPSIZE"]), int(population_perc*parameters["POPSIZE"]-2)):
         if parameters["GA_ENCODER"]:
             for j in range(parameters["GA_INDSIZE"]):
                 if globarVar.rng.random() < mutation_factor:
