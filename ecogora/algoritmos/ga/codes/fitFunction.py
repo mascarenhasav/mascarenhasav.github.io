@@ -65,5 +65,6 @@ def fitnessFunction(x, parameters):
 
 
 
+
     fitness = abs(fitInd - globalOP )
     return fitness

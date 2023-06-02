@@ -30,6 +30,9 @@ import ga
 import es
 import mutation
 import changeDetection
+import exclusion
+import antiConvergence
+import localSearch
 from aux import *
 
 
@@ -62,17 +65,18 @@ def updateBest(ind, best):
     return ind, best
 
 
+
 def evaluate(x, parameters):
     '''
     Fitness function. Returns the error between the fitness of the particle
     and the global optimum
     '''
-    #fitness = round(fitFunction.fitnessFunction(x['pos'], parameters), 3)
     x["fit"] = fitFunction.fitnessFunction(x['pos'], parameters)
     globalVar.nevals += 1
     if parameters["OFFLINE_ERROR"] and isinstance(globalVar.best["fit"], numbers.Number):
         globalVar.eo_sum += globalVar.best["fit"]
-    x["ae"] = 1
+    x["ae"] = 1 # Set as already evaluated
+
     return x
 
 
@@ -155,7 +159,6 @@ def randInit(pop, parameters):
                +parameters["PSO_POP_PERC"] \
                +parameters["DE_POP_PERC"]  \
                +parameters["ES_POP_PERC"]
-    print(perc_pop)
 
     if (abs(perc_pop-1) > 0.001):
         errorWarning(0.0, "algoConfig.ini", "XXX_POP_PERC", "The sum of the percentage of the population to perform the optimizers should be in 1")
@@ -213,7 +216,7 @@ def randInit(pop, parameters):
     return pop
 
 
-def errorWarning(nError=0.0, file="NONE", parameter="NONE", text="NONE"):
+def errorWarning(nError="0.0", file="NONE", parameter="NONE", text="NONE"):
     '''
         Print error function
     '''
@@ -285,6 +288,7 @@ def abcd(parameters, seed):
         globalVar.mpb = None
         globalVar.best = None
         globalVar.eo_sum = 0
+        globalVar.flagChangeEnv = 0
 
         gen = 1
         genChangeEnv = 0
@@ -292,6 +296,7 @@ def abcd(parameters, seed):
         flagEnv = 0
         Eo = 0
         change = 0
+        randomInit = [0 for _ in range(1, parameters["COMP_MULTIPOP_N"]+2)]
 
         # Create the population with POPSIZE individuals
         pops, globalVar.best = createPopulation(parameters)
@@ -335,30 +340,56 @@ def abcd(parameters, seed):
         ###########################################################################
 
         while globalVar.nevals < (parameters["NEVALS"]-parameters["POPSIZE"])+1 and globalVar.best["fit"] != 42:
+
+
+            #####################################
+            # Apply the components in Global level
+            #####################################
+
+            if antiConvergence.cp_antiConvergence(parameters):
+                randomInit = antiConvergence.antiConvergence(pops, parameters, randomInit)
+
+            if exclusion.cp_exclusion(parameters):
+                randomInit = exclusion.exclusion(pops, parameters, randomInit)
+
+            for id, i in enumerate(randomInit, 0):
+                if i:
+                    pops[id] = randInit(pops[id], parameters)
+                    randomInit[id] = 0
+
+
+            if localSearch.cp_localSearch(parameters):
+                globalVar.best = localSearch.localSearch(globalVar.best, parameters)
+
+
+            '''
+                The next componentes should be here
+            '''
+
+
             for pop in pops:
 
                 # Change detection component in the environment
-
                 if(parameters["COMP_CHANGE_DETECT"] == 1):
-                    if not change:
+                    if change == 0:
                         change = changeDetection.detection(pop, parameters)
                     if change:
-                        print(f"[NEVALS: {globalVar.nevals}]")
+                        #print(f"[NEVALS: {globalVar.nevals}]")
                         globalVar.best["fit"] = "NaN"
                         pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
                         if flagEnv == 0:
                             env += 1
                             genChangeEnv = gen
                             flagEnv = 1
+                        for ind in pop.ind:
+                            ind["ae"] = 0 # Allow new evaluation
+                        continue
                 elif(parameters["COMP_CHANGE_DETECT"] != 0):
                     errorWarning(0.1, "algoConfig.ini", "COMP_CHANGE_DETECT", "Component Change Detection should be 0 or 1")
-
 
                 #####################################
                 # Apply the optimizers in the pops
                 #####################################
-
-
 
                 if parameters["GA_POP_PERC"]:
                     pop = ga.ga(pop, parameters)
@@ -369,14 +400,14 @@ def abcd(parameters, seed):
 
                 for i in range(len(pop.ind)):
                     if pop.ind[i]["type"] == "PSO":
-                        pop.ind[i] = pso.pso(pop.ind[i], globalVar.best, parameters)
+                        pop.ind[i] = pso.pso(pop.ind[i], pop.best, parameters)
                     elif pop.ind[i]["type"] == "ES":
                         pop.ind[i] = es.es(pop.ind[i], pop.best, parameters)
                         #print(ind)
 
 
                 #####################################
-                # Apply the optimizers in the pops
+                # Apply the components in Population level
                 #####################################
 
                 if mutation.cp_mutation(parameters, comp=1):
@@ -388,7 +419,7 @@ def abcd(parameters, seed):
                 '''
 
 
-                # Evaluate all the individuals in the pop and update the bests
+                # Evaluate all the individuals that have no been yet in the pop and update the bests
                 pop, globalVar.best = evaluatePop(pop, globalVar.best, parameters)
 
 
@@ -402,9 +433,12 @@ def abcd(parameters, seed):
                         print(f"[POP {pop.id:04}][IND {ind['id']:04}: {ind['pos']}\t\tERROR:{ind['fit']:.04f}]\t[BEST {globalVar.best['id']:04}: {globalVar.best['pos']}\t\tERROR:{globalVar.best['fit']:.04f}]")
 
 
+
+
             change = 0
-            if abs(gen - genChangeEnv) > 2:
-                flagEnv = 0
+            flagEnv = 0
+            if abs(gen - genChangeEnv) >= 1:
+
                 change = 0
 
             gen += 1
@@ -438,7 +472,7 @@ def abcd(parameters, seed):
         bestRuns.append(globalVar.best)
 
         if parameters["DEBUG_RUN"]:
-            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']} ERROR:{globalVar.best['fit']}]")
+            print(f"[RUN:{run:02}][GEN:{gen:04}][NEVALS:{globalVar.nevals:06}][POP {globalVar.best['pop_id']:04}][BEST {globalVar.best['id']:04}:{globalVar.best['pos']}][ERROR:{globalVar.best['fit']:.4f}][Eo:{Eo:.4f}]")
         if parameters["DEBUG_RUN_2"]:
             print(f"\n==============================================")
             print(f"[RUN:{run:02}]\n[GEN:{gen:04}][NEVALS:{globalVar.nevals:06}]")
@@ -556,18 +590,25 @@ def main():
         if(parameters["ES_POP_PERC"] > 0):
             print(f"--- [ES] Rcloud:\t{parameters['ES_RCLOUD']}")
         print(f"- Components used:")
-        if(parameters["EXCLUSION_COMP"]):
-            print(f"-- [Exlcusion]: Rexcl={parameters['REXCL']}")
-        if(parameters["ANTI_CONVERGENCE_COMP"]):
-            print(f"-- [ANTI-CONVERGENCE]: Rconv={parameters['RCONV']}")
-        if(parameters["LOCAL_SEARCH_COMP"]):
-            print(f"-- [LOCAL_SEARCH]: Rls={parameters['RLS']}")
+        if(parameters["COMP_EXCLUSION"]):
+            print(f"-- [Exlcusion]: Rexcl={parameters['COMP_EXCLUSION_REXCL']}")
+        if(parameters["COMP_ANTI_CONVERGENCE"]):
+            print(f"-- [ANTI-CONVERGENCE]: Rconv={parameters['COMP_ANTI_CONVERGENCE_RCONV']}")
+        if(parameters["COMP_LOCAL_SEARCH"]):
+            print(f"-- [LOCAL_SEARCH]: Etry={parameters['COMP_LOCAL_SEARCH_ETRY']}")
+            print(f"-- [LOCAL_SEARCH]: Rls={parameters['COMP_LOCAL_SEARCH_RLS']}")
 
 
         print()
         print(f"[BENCHMARK SETUP]")
         print(f"- Name: {parameters['BENCHMARK']}")
         print(f"- NDIM: {parameters['NDIM']}")
+
+        print()
+        print(f"[FRAMEWORK SETUP]")
+        print(f"- RUNS:\t\t {parameters['RUNS']}")
+        print(f"- NEVALS p/ RUN: {parameters['NEVALS']}")
+        print(f"- SEED:\t\t {parameters['SEED']}")
 
     time.sleep(1)
     try:

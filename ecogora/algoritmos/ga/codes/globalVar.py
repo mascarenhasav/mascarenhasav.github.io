@@ -9,6 +9,8 @@ mpb = None
 rng = None
 best = None
 alreadyEvaluated = []
+changeEnv = 0
+flagChangeEnv = 0
 
 
 
