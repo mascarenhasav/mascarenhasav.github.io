@@ -105,7 +105,15 @@ pre {
 }
 
 #resumeFoot {
-	top: 900px;
+	top: 1050px;
+}
+
+#pubFoot {
+	top: 480px;
+}
+
+#proFoot {
+	top: 480px;
 }
 
 #top {
