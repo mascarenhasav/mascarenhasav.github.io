@@ -60,7 +60,17 @@ pre {
 	align-items: center;
 	justify-content: center;
 	color:#b0b0b0;
-	font-size: 25px;
+	font-size: 25px; 
+}
+
+.divName{
+	word-wrap:break-word; 
+	white-space: normal;
+	align-items: center;
+	justify-content: center;
+	color:#b0b0b0;
+	font-size: 25px; 
+	width: 800px;
 }
 
 .education{
@@ -94,33 +104,26 @@ pre {
 
 
 .myFoot {
+	float: left;
+	align-items: left;
+	justify-content: left;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	color:#808080;
+}
+
+#conFoot {
 	position: absolute;
-        top: 480px;
-        padding: 15px 0;
-	margin-left: 0px;
+	top: 505px;
+    padding: 15px 0;
 	align-items: bottom;
 	justify-content: bottom;
-	color:#EEEEEC;
-	font-size: 15px;
-}
-
-#resumeFoot {
-	top: 1050px;
-}
-
-#pubFoot {
-	top: 480px;
-}
-
-#proFoot {
-	top: 480px;
 }
 
 #top {
 	color: #468a1a;
 	font-size: 18px;
 }
-
 
 
 #title {
@@ -130,9 +133,6 @@ pre {
 	font-weight:bold;
 }
 
-
-#synopsis {
-}
 
 textarea{
 	font-size: 14px;
@@ -181,7 +181,8 @@ a {
 	color: #E0E0E0;
 }
 
-.nobr { white-space: nowrap;
+.nobr { 
+	white-space: nowrap;
 	margin-left: 0px; }
 
 a:visited {
@@ -231,10 +232,10 @@ input[type="text"] {
 }
 
 #footLine{
-	position: absolute;
+	/*position: absolute;*/
 	width: 60%;
 	right: 154px;
-	top: 90px;
+	/*top: 90px;*/
 }
 
 #pdf{

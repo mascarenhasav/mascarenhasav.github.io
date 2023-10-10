@@ -18,6 +18,17 @@
       integrity="sha512-XgCw4Srl8lC1ECwcaHwAU0WnxQwHkqmInzg9wJLtGB7DRuMaXPuK2k9WJ2AwRDGdrgK9eJpZl2hUlLi2WQssmw=="
       crossorigin="anonymous"
     />
+
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+        x.style.display = "block";
+        } else {
+        x.style.display = "none";
+        }
+      }
+    </script>
   </head>
 <body>
 <section>
@@ -29,23 +40,27 @@
 </div>
 
 <div class="myBody">
-<span id="intro">If you wish to contact me, the
-email is the easiest way :)
-<a href = "mailto:mascarenhasav@gmail.com?subject = I wish to contact you&body = Hi :)">
-This is my email
-</a>
-</span>
+<span>If you wish to contact me, the
+email is the easiest way :)</span>
+<br><br>
+</div>
+<div class="divName">
+  <button onclick="myFunction()">Show</button>
+  <div id="myDIV" style="display: none">
+    <br><br>
+    Alexandre Mascarenhas<br>
+    mascarenhasav@gmail.com<br>
+    <a href = "mailto:mascarenhasav@gmail.com?subject = I wish to contact you&body = Hi :)">Send me an email</a>
+  </div>
+
 </div>
 
-<br><br><br><br><br><br><br>
-<div class="myFoot">
-<span>
-<a href="https://mascarenhasav.github.io" id="footLine"><hr size="3" width="98%" color="#468"></a><!DOCTYPE html>
-<!-- <a href="index.html" class="hLine" id="footLine"><hr size="3" width="98%" color="#468"></a><!DOCTYPE html>  -->
-</span>
+<br><br><br><br><br>
+<div class="myFoot" id="conFoot">
+<span><a href="webpage.html" id="footLine"><hr size="3" width="69%" color="#468"></a></span>
 <span class=nobr>
 &nbsp;&nbsp;<a class="verticalLine" ></a>&nbsp;&nbsp;
-<a href="webpage.html">Man</a>&nbsp;&nbsp;
+<a href="index.html">Home</a>&nbsp;&nbsp;
 <a class="verticalLine" ></a>&nbsp;&nbsp;  
 <a href="resume.html">Resume</a>&nbsp;&nbsp;
 <a class="verticalLine" ></a>&nbsp;&nbsp;	
