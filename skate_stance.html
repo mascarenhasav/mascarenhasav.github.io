@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skate Stance Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+        }
+          
+        body {
+            margin: 2rem;
+        }
+        h1 {
+            text-align: center;
+            background: #EEEEEE;
+            padding: .2em 1em;
+            border-top: 3px solid #666666;
+            border-bottom: 3px solid #999999;
+        }           
+        #controls {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        select {
+            font-size: 16px; /* ou 16px, por exemplo */
+        }
+        select option {
+            font-size: 16px; /* ou 14px, 16px, etc */
+        }
+          
+        #gallery img {
+            max-width: 200px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: transform 0.2s ease;
+        }
+          
+        #gallery img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        h2 {
+            text-align: left;
+            padding: .2em 1em;
+            border-top: 5px solid #666666;
+            border-bottom: 1px solid #999999;
+            font-size: 26px;
+        }
+
+        .modal_img {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.85);
+            }
+            
+        .modal_img-content {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* <-- centraliza horizontalmente */
+            justify-content: center;
+            max-width: 90%;
+            padding: 20px;
+            text-align: center;
+          }
+            
+        .modal_img-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #000;
+            }
+            
+        .download-btn {
+            margin-top: 20px;
+            background-color: #218009;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+            display: inline-block; /* <-- garante que centralização funcione bem */
+        }
+            
+        .download-btn:hover {
+            background-color: #1b6607;
+            }
+            
+        .close_img {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            }
+          
+
+        /* Botão */
+        .info-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            background-color: #218009;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: none;
+            line-height: 32px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .info-button:hover {
+            background-color: #186306;
+        }
+        
+        /* Modal */
+        .modal_info {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal_info-content {
+            background-color: #f4f4f4;
+            color: black;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        /* Fechar botão */
+        .close_info {
+            position: absolute;
+            top: 10px; right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+  
+          
+          
+    </style>
+    <link rel="icon" href="images/luffy-smile-rb.png" />
+    <link rel="shortcut icon" href="images/luffy-smile-rb.png" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/hack-font/3.3.0/web/hack.min.css"
+      integrity="sha512-XgCw4Srl8lC1ECwcaHwAU0WnxQwHkqmInzg9wJLtGB7DRuMaXPuK2k9WJ2AwRDGdrgK9eJpZl2hUlLi2WQssmw=="
+      crossorigin="anonymous"
+    />
+</head>
+<body>
+    <span id="top"><h1>Skate Stance and Laterality Dashboard</h1></span>
+
+    <h2><span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top" style="font-size: 24px;"> DISTRIBUTIONS<span></h2>
+    <!-- Botão de interrogação no canto superior direito -->
+    <div style="position: relative;">
+        <button id="infoBtn" class="info-button" title="More info">?</button>
+    </div>
+    <!-- Modal -->
+    <div id="infoModal" class="modal_info">
+        <div class="modal_info-content">
+            <span class="close_info">&times;</span>
+            <div id="modalText">Loading...</div>
+        </div>
+    </div>
+
+    <div id="controls">
+        <label for="columnSelect"><span style="color:white; font-size: 24px;">Select variable to view distribution: </span></label>
+        <select id="columnSelect"></select>
+    </div>
+
+    <canvas id="distributionChart" width="600" height="150"></canvas>
+    <hr>
+
+    <h2><span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top" style="font-size: 24px;"> GRAPHIC ANALYSIS<span></h2>
+    <div id="gallery"></div>
+    <!-- Modal for image zoom -->
+    <div id="imgModal" class="modal_img">
+        <span class="close_img">&times;</span>
+      
+        <div class="modal_img-content">
+          <img class="modal_img-content" id="modalImage" />
+          <a id="downloadBtn" class="download-btn" href="#" download>Download</a>
+        </div>
+      </div>
+    <hr>
+
+    <script>
+        const csvPath = "data/df_converted_web.csv";
+        const imageFolder = "images";
+
+        async function loadCSV(path) {
+            const response = await fetch(path);
+            const text = await response.text();
+            const [headerLine, ...lines] = text.trim().split("\n");
+            const headers = headerLine.split(",");
+            const data = lines.map(line => line.split(","));
+            return { headers, data };
+        }
+
+        function getColumnData(data, index) {
+            return data.map(row => row[index]);
+        }
+
+        function updateChart(column, values) {
+            const counts = {};
+            values.forEach(val => {
+                counts[val] = (counts[val] || 0) + 1;
+            });
+            const labels = Object.keys(counts);
+            const freq = Object.values(counts);
+
+            if (window.chartInstance) window.chartInstance.destroy();
+
+            const ctx = document.getElementById('distributionChart').getContext('2d');
+            window.chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: `Distribution of ${column}`,
+                        data: freq,
+                        backgroundColor: "#218009",
+                        borderColor: 'black',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        datalabels: {
+                        clip: false,
+                          color: 'white',
+                          anchor: 'end',
+                          align: 'top',
+                          font: {
+                            size: 20, // 🔥 aqui você define o tamanho da fonte
+                            family: 'Courier New',
+                            weight: 'bold'
+                          },
+                          formatter: (value, context) => {
+                            const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `${percentage}%`;
+                          }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                            font: {
+                                size: 18,        // 👈 Tamanho da fonte do eixo X
+                                family: 'Courier New',
+                                weight: 'bold'   // 👈 Peso da fonte do eixo X
+                                },
+                              color: 'white'  // Cor dos números do eixo X
+                            },
+                            grid: {
+                              color: '#ccc'  // Cor da grade X
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { 
+                                font: {
+                                    size: 14,        // 👈 Tamanho da fonte do eixo X
+                                    family: 'Courier New',
+                                    weight: 'bold'   // 👈 Peso da fonte do eixo X
+                                },
+                                stepSize: 1,
+                                color: 'white'  // Cor dos números do eixo Y
+                            },
+                            grid: {
+                              color: '#ccc'  // Cor da grade Y
+                            },
+                            suggestedMax:  Math.max(...freq) + 15  // isso dá um respiro acima das barras
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        async function initializeDashboard() {
+            const { headers, data } = await loadCSV(csvPath);
+            const select = document.getElementById("columnSelect");
+          
+            headers.forEach((col, index) => {
+              const option = document.createElement("option");
+              option.value = index;
+              option.textContent = col;
+              select.appendChild(option);
+            });
+          
+            // Definir 'skate_stance' como padrão, se existir
+            const defaultColumn = 'skate_stance';
+            const defaultIndex = headers.indexOf(defaultColumn);
+            if (defaultIndex !== -1) {
+              select.selectedIndex = defaultIndex;
+              select.value = defaultIndex;
+              const values = getColumnData(data, defaultIndex);
+              updateChart(defaultColumn, values);
+            } else {
+              // fallback: usar primeira coluna
+              select.selectedIndex = 0;
+              const values = getColumnData(data, 0);
+              updateChart(headers[0], values);
+            }
+          
+            // Atualizar gráfico quando mudar o select
+            select.addEventListener("change", () => {
+              const selectedIndex = parseInt(select.value);
+              const values = getColumnData(data, selectedIndex);
+              updateChart(headers[selectedIndex], values);
+            });
+          }
+
+        async function loadGallery() {
+            const imageList = [
+              "confusion_logistic_reg.png",
+              "confusion_random_forest.png",
+              "clusters.png",
+              "clusters-stance.png",
+              "matrix_spearman_bon.png",
+              "distributions_lateralities.png",
+              "combined-scores.png",
+            ];
+            const gallery = document.getElementById("gallery");
+          
+            const modal_img = document.getElementById("imgModal");
+            const modalImg = document.getElementById("modalImage");
+            const downloadBtn = document.getElementById("downloadBtn");
+            const spanClose = document.querySelector(".close_img");
+          
+            imageList.forEach(img => {
+              const image = document.createElement("img");
+              const imagePath = `${imageFolder}/${img}`;
+          
+              image.src = imagePath;
+              image.alt = img;
+              image.style.cursor = "zoom-in";
+              image.title = "Click to zoom and download";
+          
+              // Clique na imagem abre o modal
+              image.addEventListener("click", () => {
+                modal_img.style.display = "block";
+                modalImg.src = imagePath;
+                downloadBtn.href = imagePath;
+                downloadBtn.download = img;
+              });
+          
+              // Botão de download visível na galeria também
+              const wrapper = document.createElement("div");
+              wrapper.style.position = "relative";
+              wrapper.style.display = "inline-block";
+              wrapper.style.margin = "10px";
+          
+              const dlBtn = document.createElement("a");
+              dlBtn.href = imagePath;
+              dlBtn.download = img;
+              dlBtn.textContent = "⬇";
+              dlBtn.style.position = "absolute";
+              dlBtn.style.top = "5px";
+              dlBtn.style.right = "5px";
+              dlBtn.style.background = "#000a";
+              dlBtn.style.color = "white";
+              dlBtn.style.padding = "5px";
+              dlBtn.style.borderRadius = "5px";
+              dlBtn.style.textDecoration = "none";
+              dlBtn.title = "Download image";
+          
+              wrapper.appendChild(image);
+              wrapper.appendChild(dlBtn);
+              gallery.appendChild(wrapper);
+            });
+          
+            // Fechar modal ao clicar no X ou fora da imagem
+            spanClose.onclick = () => modal_img.style.display = "none";
+            window.onclick = (e) => {
+              if (e.target == modal_img) modal_img.style.display = "none";
+            };
+          }
+          
+          
+
+        initializeDashboard();
+        loadGallery();
+
+        const modal_info = document.getElementById("infoModal");
+        const btn = document.getElementById("infoBtn");
+        const span = document.getElementsByClassName("close_info")[0];
+        const modalText = document.getElementById("modalText");
+
+        async function fetchInfoContent() {
+            try {
+            const mdRes = await fetch("docs/info.md");
+            if (mdRes.ok) {
+                const mdText = await mdRes.text();
+                modalText.innerHTML = marked.parse(mdText);
+                return;
+            }
+            } catch (err) {
+            console.warn("Markdown file not found.");
+            }
+
+            try {
+            const txtRes = await fetch("docs/info.txt");
+            if (txtRes.ok) {
+                const txtText = await txtRes.text();
+                modalText.innerHTML = `<pre>${txtText}</pre>`;
+                return;
+            }
+            } catch (err) {
+            console.warn("Text file not found.");
+            }
+
+            modalText.textContent = "Could not load information file.";
+        }
+
+        btn.onclick = () => {
+            modal_info.style.display = "block";
+            modalText.innerHTML = "Loading...";
+            fetchInfoContent();
+        };
+
+        span.onclick = () => {
+            modal_info.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target == modal_info) {
+            modal_info.style.display = "none";
+            }
+        };
+    </script>
+    <!-- Importa biblioteca de markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+</html>
