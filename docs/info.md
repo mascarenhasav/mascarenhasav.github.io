@@ -12,4 +12,4 @@ The code is all available in the [Github repo](https://github.com/mascarenhasav/
 
 This dashboard is part of a broader project hosted at [mascarenhasav.github.io](https://mascarenhasav.github.io)
 
-The data and analysis came from a study about lateralities conducted by [Brian Glenney](https://www.brianglenney.com/) and Alexandre Mascarenhas
+The data and analysis came from a study about lateralities conducted by Alexandre Mascarenhas and [Brian Glenney](https://www.brianglenney.com/) 

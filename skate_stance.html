@@ -52,6 +52,18 @@
             border-bottom: 1px solid #999999;
             font-size: 26px;
         }
+        h3 {
+            text-align: center;
+            color: rgb(201, 33, 33);
+            padding: .01em 1em;
+            font-size: 28px;
+        }
+        h4 {
+            text-align: justify;
+            color: white;
+            padding: .01em 1em;
+            font-size: 18px;
+        }
 
         .modal_img {
             display: none;
@@ -185,7 +197,36 @@
     />
 </head>
 <body>
-    <span id="top"><h1>Skate Stance and Laterality Dashboard</h1></span>
+    <span id="top"><h1>🛹  Skate Stance and Laterality Dashboard  🛹 </h1></span>
+    <h2><span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top" style="font-size: 24px;"> OBJECTIVE<span></h2>
+    <h3>What's Your Skate Stance? Let's Find Out!</h3>
+    <div>
+    <h4>Welcome to our ongoing research project exploring how body lateralities (like which hand, foot, or eye you use more often) 
+        might relate to your skate stance — whether you're Goofy (right foot forward) or Regular (left foot forward).
+        <br>
+        We're analyzing all kinds of activities — like which foot you use to step on a chair, press a pedal, or even kick a ball — 
+        to see if there's a pattern behind how people naturally choose their stance.</h4>
+
+    <h3>Live Results</h3>
+    <h4> Check out the real-time charts below to see how people are responding! As more skaters submit their answers, the graphs update automatically. 
+        You can view the distribution of each question and how they might connect to stance preference.</h4>
+
+    <h3>Want to Join?</h3>
+    <h4> Take the quick questionnaire and be part of the study:
+        <a href="https://forms.office.com/pages/responsepage.aspx?id=Vrf8NHw66k2rTVMkvALvXizC8vyakIdCgQ629m9hAiVUMkdTQlJUMjFQMURLVVZVSUlUTUJQNEpMUS4u&route=shorturl" target="_blank" style="
+        display: inline-block;
+        background-color: #218009;
+        color: white;
+        padding: 10px 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        ">
+        Click here to fill out the Skate Stance Form
+        </a>
+        It’s anonymous, fun, and takes just a couple minutes. Let’s see what your body says about how you ride.</h4>
+    </div>
+    <hr>
 
     <h2><span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top" style="font-size: 24px;"> DISTRIBUTIONS<span></h2>
     <!-- Botão de interrogação no canto superior direito -->
@@ -207,18 +248,24 @@
 
     <canvas id="distributionChart" width="600" height="150"></canvas>
     <hr>
+    
 
-    <h2><span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top" style="font-size: 24px;"> GRAPHIC ANALYSIS<span></h2>
-    <div id="gallery"></div>
-    <!-- Modal for image zoom -->
-    <div id="imgModal" class="modal_img">
-        <span class="close_img">&times;</span>
-      
-        <div class="modal_img-content">
-          <img class="modal_img-content" id="modalImage" />
-          <a id="downloadBtn" class="download-btn" href="#" download>Download</a>
+    <h2><span id="myName" >[<span id="dollar">~</span>]</span>$<span id="top" style="font-size: 24px;"> ANALYSIS - After the paper is published, the results and analysis will be posted here<span></h2>
+
+        <div id="controls">
+            <label for="analysisSelect"><span style="color:white; font-size: 24px;">Select analysis to view results: </span></label>
+            <select id="analysisSelect"></select>
         </div>
-      </div>
+    <!--<div id="gallery"></div> -->
+    <!-- Modal for image zoom --> 
+    <!--<div id="imgModal" class="modal_img"> -->
+        <!--<span class="close_img">&times;</span> -->
+      
+        <!--<div class="modal_img-content"> -->
+          <!--<img class="modal_img-content" id="modalImage" /> -->
+          <!--<a id="downloadBtn" class="download-btn" href="#" download>Download</a> -->
+        <!--</div> -->
+    <!-- </div> -->
     <hr>
 
     <script>
